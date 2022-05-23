@@ -12,4 +12,4 @@ A user will be able to connect their wallet and place a vote on if their wallet 
 
 # Proposed Flow Diagram
 
-![index](https://user-images.githubusercontent.com/33762147/169212449-dc380cdf-6021-4143-bbb9-c09539f37e92.png)
+![index](https://user-images.githubusercontent.com/33762147/169864155-b5f425c1-09fd-4cbf-bc4c-1fd437cbfe97.png)
