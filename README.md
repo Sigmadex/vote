@@ -4,7 +4,8 @@
 
 ## Summary
 
-This application enables select whitelisted wallet addresses to vote on the SEP-002 proposal.
+This application enables select whitelisted wallet addresses to vote on the SEP-002 proposal:
+* Launch strategy and options for going to market
 
 # How it Works
 
