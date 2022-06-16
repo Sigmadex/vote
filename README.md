@@ -7,7 +7,7 @@
 This application enables select whitelisted wallet addresses to vote on the SEP-002 proposal:
 * Launch strategy and options for going to market
 
-# How it Works
+## How it Works
 
 A user will be able to connect their wallet and place a vote on if their wallet address is whitelisted in the smart contract. Votes will be stored on-chain in an array that can be called through Web3 API.
 
@@ -22,10 +22,10 @@ The voting interface consists of 2 elements:
   * Storing votes
   * Supplying stats
 
-# Proposed Flow Diagram
+## Proposed Flow Diagram
 
 ![index](https://user-images.githubusercontent.com/33762147/169864155-b5f425c1-09fd-4cbf-bc4c-1fd437cbfe97.png)
 
-# Figma Design
+## Figma Design
 
 ![2022-06-15_18-15-53](https://user-images.githubusercontent.com/33762147/173963247-a91c26a9-c0fe-482b-ac37-f6dce3f24001.jpg)
