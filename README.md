@@ -28,4 +28,4 @@ The voting interface consists of 2 elements:
 
 # Figma Design
 
-https://www.figma.com/file/jKQZgP4Vw4n3P0Lf1k7wQ5/Vault-Sigma?node-id=0%3A1
+![2022-06-15_18-15-53](https://user-images.githubusercontent.com/33762147/173963247-a91c26a9-c0fe-482b-ac37-f6dce3f24001.jpg)
