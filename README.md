@@ -21,6 +21,7 @@ The voting interface consists of 2 elements:
   * Verifying eligibility 
   * Storing votes
   * Supplying stats
+  * Ending voting session
 
 ## Proposed Flow Diagram
 
