@@ -14,13 +14,16 @@ A user will be able to connect their wallet and place a vote on if their wallet 
 The voting interface consists of 2 elements:
 
 * React front-end
-  *  For interacting with the voting smart contract
+  *  For interacting with the voting smart contract (client side)
      * Submitting a vote
      * Viewing statistics
+  * Statistics panel (admin side)
+     * Associate wallet ID with vote
 * Smart contract itself
   * Verifying eligibility 
   * Storing votes
   * Supplying stats
+  * Add weighted parameters
   * Ending voting session
 
 ## Proposed Flow Diagram
