@@ -18,7 +18,7 @@ The voting interface consists of 2 elements:
      * Submitting a vote
      * Viewing statistics
   * Statistics panel (admin side)
-     * Associate wallet ID with vote
+     * Associate wallet ID with vote and weight
 * Smart contract itself
   * Verifying eligibility 
   * Storing votes
@@ -28,8 +28,12 @@ The voting interface consists of 2 elements:
 
 ## Proposed Flow Diagram
 
-![index](https://user-images.githubusercontent.com/33762147/169864155-b5f425c1-09fd-4cbf-bc4c-1fd437cbfe97.png)
+<div align="center">
 
+![index](https://user-images.githubusercontent.com/33762147/174503642-b17d0abd-690b-4e96-82dd-aa9269936eed.png)
+
+ </div>
+ 
 ## Figma Design
 
 ![2022-06-15_18-15-53](https://user-images.githubusercontent.com/33762147/173963247-a91c26a9-c0fe-482b-ac37-f6dce3f24001.jpg)
