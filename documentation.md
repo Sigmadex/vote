@@ -1,20 +1,32 @@
 # Frontend Documentation
 *Make sure you have Node installed (preferably version 16.0 and up)
 
-## Downloading repository
-Select Download ZIP
-After unpacking, cd into vote-main folder
-
-## Cloning repository
-cd into your working folder
+## Clone Repository
+```
 git clone https://github.com/Sigmadex/vote.git
-cd into vote folder
+```
 
-## Installing dependencies
+`cd` into working folder
+
+`cd` into vote folder
+
+## Install Dependencies
+### Install NPM
+```
 npm install
+```
+### Install React Scripts
+```
+npm i react-scripts
+```
 
-## Running server
-npm start
-
-## Building for production
+## Build for Production
+```
 npm run build
+```
+
+## Run Server
+```
+npm start
+```
+
