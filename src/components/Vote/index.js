@@ -71,11 +71,20 @@ const Polls = () => { // pass options as parameter
   )
 }
 
+const votePortalStyles = {
+  // paddingTop: '36px',
+  paddingLeft: '36px',
+  paddingRight: '36px'
+}
+
 const VotePortal = () => {
   return (
-    <div>
+    <div style={votePortalStyles} className='vote-portal'>
       <h3>Vote Portal</h3>
       <span>Connect your wallet to see if you qualify for voting.</span>
+
+      {/* <img style={{backgroundImage: 'linear-gradient(#b2ddad, #74bce5)'}} alt='block' src='/images/endless-layered 2.png' /> */}
+
       <div style={{display: 'flex', justifyContent: 'space-between'}}>
         <div>Proposal ID:</div>
         <div>{proposalId}</div>
