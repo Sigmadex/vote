@@ -1,17 +1,3 @@
-body {
-  /* background: #b2ddad;
-  background-image: url('/src/images/endless-layered.png'); */
-  background-image: url('/src/images/endless-layered.png'), linear-gradient(#b2ddad, #74bce5);
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  height: 100vh;
-  font-family: 'Work Sans';
-  background-attachment: fixed;
-  padding-top: 90px;
-  /* padding-bottom: 90px; */
-  background-image:
-}
-
 .App {
   text-align: center;
   font-family: 'Work Sans';
