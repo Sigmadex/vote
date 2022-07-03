@@ -2,9 +2,16 @@ import './App.css';
 import Navbar from '../Navbar'
 import Vault from '../Vault'
 import Vote from '../Vote'
+import Test from '../Test'
 import Footer from '../Footer'
 // import Alert from '../Alert'
 import { Routes, Route, Link } from 'react-router-dom'
+
+const Home = () =>
+  <>
+    <Link to='/vote'>Vote</Link>
+    <Link to='/vault'>Vault</Link>
+  </>
 
 function App() {
   return (
@@ -14,9 +21,10 @@ function App() {
       <Navbar />
 
       <Routes>
-        <Route index element={<h1>Home</h1>} />
+        <Route index element={<Home />} />
         <Route path='/vault' element={<Vault />} />
         <Route path='/vote' element={<Vote />} />
+        <Route path='/test' element={<Test />} />
         <Route path='*' element={<h1>404</h1>} />
       </Routes>
 
