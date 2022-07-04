@@ -3,6 +3,7 @@ import Navbar from '../Navbar'
 import Vault from '../Vault'
 import Vote from '../Vote'
 import Test from '../Test'
+import StickyFooter from '../StickyFooter'
 import Footer from '../Footer'
 // import Alert from '../Alert'
 import { Routes, Route, Link } from 'react-router-dom'
@@ -29,6 +30,7 @@ function App() {
       </Routes>
 
       <Footer />
+      {/* <StickyFooter /> */}
     </div>
   );
 }

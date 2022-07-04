@@ -1,115 +1,123 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'
 import ConnectButton from '../ConnectButton'
+import { ethers } from 'ethers'
+import abi from '../../artifacts/contracts/Keyboards.sol/Keyboards.json'
 
-const proposalId = 'SEP-002'
-const propsalTitle = 'Launch Strategy'
-const proposalLink = 'https://sigmadex.org/'
-let options = [
-  {
-    name: 'A',
-    id: 1,
-    votes: 45
-  },
-  {
-    name: 'B',
-    id: 2,
-    votes: 24
-  },
-  {
-    name: 'C',
-    id: 3,
-    votes: 31
+function VotePortal() {
+  const [ethereum, setEthereum] = useState(undefined);
+  const [connectedAccount, setConnectedAccount] = useState(undefined);
+  const [keyboards, setKeyboards] = useState([])
+  // const [contractAddress, setContractAddress] = useState(undefined);
+  const contractAddress = process.env.REACT_APP_KEYBOARD_CONTRACT_ADDRESS;
+  const contractABI = abi.abi;
+
+  const handleAccounts = (accounts) => {
+    if (accounts.length > 0) {
+      const account = accounts[0];
+      console.log('We have an authorized account: ', account);
+      setConnectedAccount(account);
+    } else {
+      console.log("No authorized accounts yet")
+    }
+  };
+
+  const getConnectedAccount = async () => {
+    if (window.ethereum) {
+      setEthereum(window.ethereum);
+    }
+
+    if (ethereum) {
+      const accounts = await ethereum.request({ method: 'eth_accounts' });
+      handleAccounts(accounts);
+    }
+  };
+
+  // useEffect(() => getConnectedAccount(), []);
+
+  useEffect(() => {
+    // async function fetchData() {
+    //   const response = await MyAPI.getData(someId)
+    // }
+
+    async function getConnectedAccount() {
+      if (window.ethereum) {
+        setEthereum(window.ethereum)
+      }
+
+      if (ethereum) {
+        // alert('foo')
+        const accounts = await ethereum.request({ method: 'eth_accounts' })
+        handleAccounts(accounts)
+
+      }
+
+      // const accounts = await ethereum.request({ method: 'eth_accounts' })
+      // handleAccounts(accounts)
+    }
+
+    getConnectedAccount()
+  }, [])
+
+  const connectAccount = async () => {
+    if (!ethereum) {
+      alert('MetaMask is required to connect an account');
+      return;
+    }
+
+    const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+    handleAccounts(accounts);
+  };
+
+  // const getKeyboards = async () => {
+  //   if (ethereum && connectedAccount) {
+  //     const provider = new ethers.providers.Web3Provider(ethereum);
+  //     const signer = provider.getSigner();
+  //     const keyboardsContract = new ethers.Contract(contractAddress, contractABI, signer);
+  //
+  //     const keyboards = await keyboardsContract.getKeyboards();
+  //     console.log('Retrieved keyboards...', keyboards)
+  //     setKeyboards(keyboards)
+  //   }
+  // }
+  //
+  // useEffect(() => getKeyboards(), [connectedAccount])
+
+  useEffect(() => {
+    // async function fetchData() {
+    //   const response = await MyAPI.getData(someId)
+    // }
+
+    async function getKeyboards() {
+      if (ethereum && connectedAccount) {
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+        console.log(contractAddress)
+        const keyboardsContract = new ethers.Contract(contractAddress, contractABI, signer);
+
+        const keyboards = await keyboardsContract.getKeyboards();
+        console.log('Retrieved keyboards...', keyboards)
+        setKeyboards(keyboards)
+      }
+    }
+
+    getKeyboards()
+  }, [connectedAccount])
+
+  if (!ethereum) {
+    return <p>Please install MetaMask to connect to this site</p>
   }
-]
-const isAuthenticated = true // import checkAuthentication() from Auth class
 
-const Vote = () => {
-  return (
-    <VotePortal />
-  );
-}
-
-const VoteButton = () => {
-  function casVote() {
-    alert('Casting vote')
+  if (!connectedAccount) {
+    return <button onClick={connectAccount}>Connect MetaMask Wallet</button>
   }
-
-  return (
-    <button onClick={() => casVote()}>Cast Vote</button>
-  )
-}
-
-const Error = (message) => { // abstract into own folder
-  return (
-    <h3>This wallet does not hold a vote NFT.</h3>
-  )
-}
-
-// Abstract into own folder
-const Polls = () => { // pass options as parameter
-  const totalVotes = options.reduce((total, option) => total + option.votes, 0)
 
   return (
     <div>
-      <span>Your vote has been recorded on chain</span>
-      <div>
-        {options.map((option, index) => {
-          let percentage = Math.round(option.votes / totalVotes)
-          return (
-            <div style={{display: 'flex', justifyContent: 'space-between'}}>
-              <div>Option {option.name}</div>
-              <div>
-                {percentage}%
-                <span>bar</span>
-              </div>
-            </div>
-          )
-        })}
-      </div>
+      <h1>Vote Portal</h1>
+      <div>{keyboards.map((keyboard, i) => <p key={i}>{keyboard}</p>)}</div>
     </div>
   )
 }
 
-const votePortalStyles = {
-  // paddingTop: '36px',
-  paddingLeft: '36px',
-  paddingRight: '36px'
-}
-
-const VotePortal = () => {
-  return (
-    <div style={votePortalStyles} className='vote-portal'>
-      <h3>Vote Portal</h3>
-      <span>Connect your wallet to see if you qualify for voting.</span>
-
-      {/* <img style={{backgroundImage: 'linear-gradient(#b2ddad, #74bce5)'}} alt='block' src='/images/endless-layered 2.png' /> */}
-
-      <div style={{display: 'flex', justifyContent: 'space-between'}}>
-        <div>Proposal ID:</div>
-        <div>{proposalId}</div>
-      </div>
-      <div style={{display: 'flex', justifyContent: 'space-between'}}>
-        <div>RE:</div>
-        <div>{propsalTitle}</div>
-      </div>
-      <div style={{display: 'flex', justifyContent: 'space-between'}}>
-        <div>Forum Link:</div>
-        <Link to={proposalLink}>View</Link>
-      </div>
-      <div style={{display: 'flex', justifyContent: 'space-between'}}>
-        {options.map((option, index) =>
-          // class=isAuthenticated ? '' : 'disabled'
-          <div key={index} onClick={() => console.log('clicked on option', option.name)}>{option.name}</div>
-        )}
-      </div>
-      {isAuthenticated
-        ? <VoteButton />
-        : <ConnectButton />}
-      {/* <Polls /> */}
-      {/* <Error /> */}
-    </div>
-  )
-}
-
-export default Vote;
+export default VotePortal

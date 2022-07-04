@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { ethers } from 'ethers';
 import { truncateAddress } from '../utilities/formatting'
 
-const Test = () => {
+function Test() {
   const [walletAddress, setWalletAddress] = useState('')
 
   async function requestAccount() {
