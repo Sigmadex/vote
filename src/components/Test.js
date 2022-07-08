@@ -1,45 +1,32 @@
 import { useState } from 'react';
 import { ethers } from 'ethers';
 import { truncateAddress } from '../utilities/formatting'
+import VoteCard from './VoteCard'
+
+let proposal = {
+  id: 'SEP-002',
+  subject: 'Launch Strategy',
+  link: 'https://sigmadex.org/',
+  options: [
+    {
+      optionName: 'A',
+      optionDescription: ''
+    },
+    {
+      optionName: 'B',
+      optionDescription: ''
+    },
+    {
+      optionName: 'C',
+      optionDescription: ''
+    }
+  ]
+}
 
 function Test() {
-  const [walletAddress, setWalletAddress] = useState('')
-
-  async function requestAccount() {
-    console.log('Requesting account')
-
-    if (window.ethereum) {
-      console.log('detected ethereum')
-
-      try {
-        const accounts = await window.ethereum.request({
-          method: 'eth_requestAccounts'
-        });
-        setWalletAddress(accounts[0])
-      } catch (error) {
-        console.log(error)
-      }
-
-    } else {
-      alert('Metamask is required for signing in')
-    }
-  }
-
-  async function connectWallet() {
-    if (typeof window.ethereum !== 'undefined') {
-      await requestAccount()
-
-      const provider = new ethers.providers.Web3Provider(window.ethereum)
-    }
-  }
-
   return (
-    <div className='test-class'>
-      {walletAddress
-        ? truncateAddress(walletAddress)
-        : <button onClick={() => requestAccount()}>Sign In</button>}
-    </div>
-  );
+    <VoteCard proposal={proposal} />
+  )
 }
 
 export default Test;
