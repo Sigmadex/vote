@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { ethers } from 'ethers';
+import { useContext, useState } from 'react'
+import { ethers } from 'ethers'
+import { AddressContext } from '../../utilities/Auth'
 import { truncateAddress } from '../../utilities/formatting'
 
 const buttonStyles = {
@@ -13,47 +14,14 @@ const buttonStyles = {
   color: '#ffffff'
 }
 
-const ConnectButton = () => { // pass walletAddress from parent (App.js, use Provider?)
-  const [walletAddress, setWalletAddress] = useState('')
-
-  async function requestAccount() {
-    console.log('Requesting account')
-
-    if (window.ethereum) {
-      console.log('detected ethereum')
-
-      try {
-        const accounts = await window.ethereum.request({
-          method: 'eth_requestAccounts'
-        });
-        setWalletAddress(accounts[0])
-        storeWalletAddress(accounts[0])
-      } catch (error) {
-        console.log(error)
-      }
-
-    } else {
-      alert('Metamask is required for signing in')
-    }
-  }
-
-  function storeWalletAddress(walletAddress) {
-    localStorage.setItem('walletAddess', walletAddress)
-  }
-
-  async function connectWallet() {
-    if (typeof window.ethereum !== 'undefined') {
-      await requestAccount()
-
-      const provider = new ethers.providers.Web3Provider(window.ethereum)
-    }
-  }
+const ConnectButton = ({connectAccount}) => {
+  const walletAddress = useContext(AddressContext)
 
   return (
     walletAddress
       ? <span style={{color: '#ffffff'}}>{truncateAddress(walletAddress)}</span>
       : <button
-          onClick={() => requestAccount()}
+          onClick={connectAccount}
           style={buttonStyles}
         >
           Connect Wallet

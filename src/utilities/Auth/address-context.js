@@ -1,23 +1,23 @@
-import React from 'react'
+import { createContext } from 'react'
 
-const AddressContext = React.createContext(null)
+const AddressContext = createContext()
+
+export default AddressContext
 
 /*
-  MARK: - custom hook to be consumed by any component that requires user's wallet address
-  Usage:
-    import { useAddress } from './address-context'
+  TODO:
+  Create a custom provider e.g.:
+    const AddressProvider = ({ value, children }) => {
+      return (
+        <AddressContext.Provider value={value}>
+          {children}
+        </AddressContext.Provider>
+      )
+    }
 
-    const address = useAddress()
+  Create a custom hook e.g.:
+    const useAddress = () => React.useContext(AddressContext)
+
+  Export as such:
+  export default { AddressProvider, useAddress }
 */
-const useAddress = () => React.useContext(AddressContext)
-
-const AddressProvider = ({ value, children }) => {
-  return (
-    <AddressContext.Provider value={value}>
-      {children}
-    </AddressContext.Provider>
-  )
-}
-
-// export default { AddressContext, useAddress }
-export default { AddressProvider, useAddress }
