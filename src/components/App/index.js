@@ -1,20 +1,18 @@
-import { createContext, useState, useEffect, useContext } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css';
 import Navbar from '../Navbar'
 import Vault from '../Vault'
-import Vote from '../Vote'
+import VotePortal from '../VotePortal'
 import Test from '../Test'
-import StickyFooter from '../StickyFooter'
 import Footer from '../Footer'
 import { Routes, Route, Link } from 'react-router-dom'
-import { ethers } from 'ethers'
 import { AddressContext } from '../../utilities/Auth'
 
 const Home = () => {
   return (
-    <div>
+    <div style={{textAlign: 'center'}}>
       <Link to='/vote'>Vote</Link>
-      <Link to='/vault'>Vault</Link>
+      <Link to='/test'>Test</Link>
     </div>
   )
 }
@@ -23,7 +21,6 @@ const App = () => {
   const [walletAddress, setWalletAddress] = useState(null)
   const [ethereum, setEthereum] = useState(undefined)
   const [connectedAccount, setConnectedAccount] = useState(undefined)
-  const [testVariable, setTestVariable] = useState('yolo')
 
   const connectAccount = async () => {
     if (!ethereum) {
@@ -67,7 +64,7 @@ const App = () => {
       <Routes>
         <Route index element={<Home />} />
         <Route path='/vault' element={<Vault />} />
-        <Route path='/vote' element={<Vote />} />
+        <Route path='/vote' element={<VotePortal connectAccount={connectAccount} />} />
         <Route path='/test' element={<Test />} />
         <Route path='*' element={<h1>404</h1>} />
       </Routes>

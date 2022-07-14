@@ -1,4 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useContext } from 'react'
+import { AddressContext } from '../../utilities/Auth'
+import ConnectButton2 from '../ConnectButton2'
 
 const cardStyles = {
   width: '604px',
@@ -26,10 +28,11 @@ const optionButtonStyles = {
   cursor: 'pointer'
 }
 
-function VoteCard({proposal}) {
+function VoteCard({proposal, connectAccount}) {
+  const walletAddress = useContext(AddressContext)
   const [selectedOption, setOption] = useState(null)
 
-  // MARK: - Write method for highlighting selected option
+  // TODO: Write method for highlighting selected option
 
   const OptionButton = ({option}) => {
     return (
@@ -50,15 +53,24 @@ function VoteCard({proposal}) {
   return (
     <div style={centerDiv}>
       <div style={cardStyles}>
+
         <span style={{fontSize: '38px', fontWeight: '700'}}>Vote Portal</span>
-        Select one of the three options below and submit your vote.
+
+        {walletAddress
+          ? 'Select one of the three options below and submit your vote.'
+          : 'Connect your wallet to see if you qualify for voting.'}
+
         <div style={{display: 'flex', justifyContent: 'space-between'}}>
           <div>Proposal ID: {proposal.id}</div>
           <div>RE: {proposal.subject}</div>
           <div>Forum Link: {proposal.link}</div>
         </div>
         {proposal.options.map((p, i) => <div key={i}><OptionButton option={p.optionName} /></div>)}
-        <button onClick={() => castVote()}>Cast Vote</button>
+
+        {walletAddress
+          ? <button onClick={() => castVote()}>Cast Vote</button>
+          : <ConnectButton2 connectAccount={connectAccount} />}
+
       </div>
     </div>
   )

@@ -3,17 +3,22 @@ import { AddressContext } from '../../utilities/Auth'
 import { truncateAddress } from '../../utilities/formatting'
 
 const buttonStyles = {
-  width: '138px',
-  height: '36px',
-  border: '1px solid rgba(255, 255, 255, 0.5)',
+  width: '150px',
+  height: '46px',
+  border: '1px solid #404C55',
   borderRadius: '10px',
   backgroundColor: 'transparent',
   fontSize: '14px',
   cursor: 'pointer',
-  color: '#ffffff'
+  color: '#404C55',
+  // display: 'flex',
+  // flexDirection: 'column',
+  // justifyContent: 'center',
+  // alignItems: 'center',
+  // padding: '0px'
 }
 
-const ConnectButton = ({connectAccount}) => {
+const ConnectButton2 = ({connectAccount}) => {
   const walletAddress = useContext(AddressContext)
 
   return (
@@ -28,4 +33,4 @@ const ConnectButton = ({connectAccount}) => {
   )
 }
 
-export default ConnectButton;
+export default ConnectButton2;
