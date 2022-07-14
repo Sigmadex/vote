@@ -1,7 +1,16 @@
 import ConnectButton from '../ConnectButton'
 import { AddressContext } from '../../utilities/Auth'
 
-const Logo = () => <img style={{cursor: 'pointer'}} alt='Sigmadex logo' src='/images/Sigmadex-logo.svg' />
+const Logo = () => {
+  return (
+    <img
+      style={{cursor: 'pointer', height: '21px'}}
+      alt='Sigmadex logo'
+      src='/images/logo-E-wht.svg'
+    />
+  )
+}
+
 const navbarStyles = {
   height: '90px',
   // paddingTop: '90px',

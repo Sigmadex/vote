@@ -1,1 +1,11 @@
-export default function Test() { return <h1>Test</h1> }
+import Modal from './Modal'
+
+function Test() {
+  return (
+    <div>
+      <Modal text={'This wallet does not hold a vote NFT.'} />
+    </div>
+  )
+}
+
+export default Test
