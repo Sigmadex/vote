@@ -4,7 +4,7 @@ const myHTML =
 <head>
     <meta charset="utf-8" />
     <script>(function(i,s,o,g,r,a,m){i["GoogleAnalyticsObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,"script","https://www.google-analytics.com/analytics.js","ga");ga("create", "UA-105319773-1", {"cookieDomain":"auto"});ga("set", "anonymizeIp", true);ga("send", "pageview");</script>
-    <title>Ballot Manager</title>
+    <title>Vote</title>
     <link rel="stylesheet" type="text/css" href="main.css">
 	<link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap.min.css">
@@ -16,116 +16,53 @@ const myHTML =
 <body>
     <div class="container">
 
-        <h1>Ballot Manager</h1>
+        <h1>Vote</h1>
 
-    	<div class="panel panel-default">
-        	<div class="panel-heading">New Ballot Contract</div>
-        	<div class="panel-body">
-        	    <div class="row">
-                    <div class="col-md-6">
-                    	<div class="form-group">
-                			<label for="official">Ballot Official Name</label>
-                			<input id="official" class="form-control" type="text" value="Chairman">
-                    	</div>
+        <div id="panels_ballot">
+
+           	<div class="panel panel-default">
+               	<div class="panel-heading">Ballot Contract</div>
+               	<div class="panel-body">
+                   	<div class="form-group">
+               			<label for="txtBallotAddress">Ballot Address</label>
+               			<input id="txtBallotAddress" class="form-control" type="text" value="">
+                   	</div>
+
+                   	<div class="form-group">
+                       	<input id="btnGo" class="btn btn-primary" type="button" value="Go" />
+                       	<img id="loader" src="https://loading.io/spinners/reload/index.ajax-syncing-loading-icon.svg">
+                   	</div>
+               	</div>
+       	    </div>
+
+       	</div>
+
+        <div id="panels_contract">
+
+            <div class="panel panel-default">
+               	<div class="panel-heading">Contract Details</div>
+               	<div class="panel-body">
+
+               		<div id="lbl_state"></div>
+               		<div id="lbl_officialname"></div>
+               		<div id="lbl_proposal"></div>
+               		<div id="lbl_result"></div>
+
+                    <div id="section_voting">
+                        <hr />
+               		    <div id="lbl_voter"></div>
+                       	<div><b>Your vote</b></div>
+               	        <input id="btnYes" class="btn btn-success" type="button" value="Yes" />
+               	        <input id="btnNo" class="btn btn-danger" type="button" value="No" />
+               	        <img id="loaderChoice" src="https://loading.io/spinners/reload/index.ajax-syncing-loading-icon.svg">
+               	        <div id="lblVoted"></div>
                     </div>
-                    <div class="col-md-6">
-                    	<div class="form-group">
-                			<label for="proposal">Proposal</label>
-                			<input id="proposal" class="form-control" type="text" value="Should we re-elect Jack?">
-                    	</div>
-                    </div>
-                </div>
-            	<div class="form-group">
-                	<input id="btnGo" class="btn btn-primary" type="button" value="Go" />
-                	<img id="loader" src="https://loading.io/spinners/reload/index.ajax-syncing-loading-icon.svg">
-            	</div>
-
-            	<div id="kaleidorefresh" class="form-group">
-                	<label for="contractAddress">Contract Address</label>
-                	<input id="contractAddress" class="form-control" type="text" value="">
-                	<input id="btnRefresh" class="btn btn-primary" type="button" value="Refresh" />
-            	</div>
-
-        	</div>
-    	</div>
-
-        <div class="row" id="panels_contract">
-            <div class="col-md-6">
-
-                <div class="panel panel-default">
-                	<div class="panel-heading">Contract Details</div>
-                	<div class="panel-body">
-
-                	   <div class="row">
-                            <div class="col-md-6">
-                                <span id="lbl_state" class=""></span>
-                            </div>
-                             <div class="col-md-6" align="right">
-                	            <input id="btnStart" class="btn btn-primary" type="button" value="Start Voting" />
-                	            <input id="btnEnd" class="btn btn-primary" type="button" value="End Voting" />
-                	            <img id="loaderStartVote" src="https://loading.io/spinners/reload/index.ajax-syncing-loading-icon.svg">
-                            </div>
-                        </div>
-
-                		<div id="lbl_officialname"></div>
-                		<div id="lbl_proposal"></div>
-                		<div id="lbl_address"></div>
-                		<div id="lbl_state"></div>
-                	</div>
-            	</div>
-            </div>
-
-            <div class="col-md-6">
-                <div class="panel panel-default">
-                	<div class="panel-heading">Vote Details</div>
-                	<div class="panel-body">
-                		<div id="lbl_result"></div>
-                		<div id="lbl_voters_num"></div>
-                		<div id="lbl_votes_num"></div>
-                	</div>
-            	</div>
-            </div>
+               	</div>
+           	</div>
         </div>
 
-    	<div class="panel panel-default" id="panels_voters">
-        	<div class="panel-heading">Voters</div>
-        	<div class="panel-body">
-
-        	        <div id="section_addVoter">
-            	        <div class="row">
-                            <div class="col-md-6">
-                            	<div class="form-group">
-                        			<label for="txtNewVoterAddress">Voter Wallet Address</label>
-                        			<input id="txtNewVoterAddress" class="form-control" type="text" value="0xAF703Ae5e51159A97623118dd2b0202561856787">
-                            	</div>
-                            </div>
-                            <div class="col-md-6">
-                            	<div class="form-group">
-                        			<label for="txtNewVoterName">Voter Name</label>
-                        			<input id="txtNewVoterName" class="form-control" type="text" value="Zoe">
-                            	</div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                        	<input id="btnAdd" class="btn btn-primary" type="button" value="Add" />
-                        	<img id="loaderNewVoter" src="https://loading.io/spinners/reload/index.ajax-syncing-loading-icon.svg">
-                        </div>
-                    </div>
-
-                    <div id="section_listVoters">
-                    	<table id="voterTable" class="table table-striped table-bordered" style="width:100%">
-                			<thead>
-                			</thead>
-                			<tbody>
-                			</tbody>
-        				</table>
-        			</div>
-
-        	</div>
-    	</div>
-
     </div>
+
 
     <script>
         var web3 = new Web3();
@@ -137,17 +74,7 @@ const myHTML =
         var voterTable;
 
         $( document ).ready(function() {
-            $('#kaleidorefresh').hide();
             $('#panels_contract').hide();
-            $('#panels_voters').hide();
-
-       	    voterTable = $('#voterTable').DataTable( {
-                columns: [
-                    { title: "Address" },
-                    { title: "Name" },
-                    { title: "Status" }
-                ]
-            } );
         });
 
         window.addEventListener('load', async () => {
@@ -179,63 +106,26 @@ const myHTML =
         	}
         });
 
-
-        var BallotContractAddress = "";
-        var MyTransactionHash;
-
-        function refreshContract(_contractAddress){
-            loadBallotContract(_contractAddress);
-            var myBallot = new web3.eth.Contract(ballotABI, _contractAddress);
-            var currentState = loadState(myBallot);
-
-            if (currentState == 0){
-                $('#panels_contract').show();
-                $('#panels_voters').show();
-                $("#btnStart").show();
-                $("#btnEnd").hide();
-                $("#loader").hide();
-                $("#section_addVoter").show();
-            }
-            else if (currentState == 1){
-                 $("#loaderStartVote").hide();
-                $("#btnStart").hide();
-                $("#btnEnd").show();
-                $("#section_addVoter").hide();
-            }
-            else if (currentState == 2){
-                $("#loaderStartVote").hide();
-                $("#btnEnd").hide();
-            }
-
-        }
-
-        function getContract(){
-            web3.eth.getTransactionReceipt(MyTransactionHash)
-            .then((receipt) => {
-                try{
-                    if (receipt.contractAddress){
-                        BallotContractAddress = receipt.contractAddress;
-                        loadBallotContract(BallotContractAddress);
-                        console.log(BallotContractAddress);
-                        $("#contractAddress").val(BallotContractAddress);
-                        watchVoteStarted(); //start watching for events
-                        watchVoterAdded(); //start watching for new voters
-                        watchVoteDone(); //start watching for vote done
-                        watchVoteEnd(); //start watching for vote end
-                        $('#panels_contract').show();
-                        $('#panels_voters').show();
-                        $("#btnStart").show();
-                        $("#btnEnd").hide();
-                        $("#loader").hide();
-                        $("#section_addVoter").show();
-                        return;
-                    }
-                }
-                catch(e){
-                    console.log("nope");
-                    window.setTimeout(getContract, 1000);
-                }
+        function getContract(_ballotContractAddress){
+            Ballot = new web3.eth.Contract(ballotABI, _ballotContractAddress);
+        	Ballot.methods.ballotOfficialName().call().then((result) => {
+                $("#lbl_officialname").html("<b>Ballot Official Name: </b>" + result);
             });
+            Ballot.methods.proposal().call().then((result) => {
+                $("#lbl_proposal").html("<b>Proposal: </b>" + result);
+            });
+
+            loadFinalResult(Ballot);
+            loadState(Ballot);
+
+            watchVoteStarted(); //start watching for events
+            watchVoteEnd(); //start watching for vote end
+            watchVoteDone(); //start watching for vote done
+
+            $('#panels_contract').show();
+            $("#loader").hide();
+            $("#section_voting").hide();
+
         }
 
 //-------------- Watching Section -------------------//
@@ -246,49 +136,6 @@ const myHTML =
                 console.log(event.returnValues.finalResult);
                 loadState(Ballot);
                 loadFinalResult(Ballot);
-                $("#loaderStartVote").hide();
-                $("#btnEnd").hide();
-            })
-            .on('data', (event) => {
-
-            })
-            .on('changed', (event) => {
-                // remove event from local database
-            })
-            .on('error', console.error)
-        }
-
-        function watchVoteDone(){
-            Ballot.events.voteDone({
-            }, (error, event) => {
-                console.log(event.returnValues.voter);
-                updateNewVote(event.returnValues.voter);
-            })
-            .on('data', (event) => {
-
-            })
-            .on('changed', (event) => {
-                // remove event from local database
-            })
-            .on('error', console.error)
-        }
-
-        var lastVoteAdded="";
-        function watchVoterAdded(){
-            Ballot.events.voterAdded({
-            }, (error, event) => {
-                console.log(event.returnValues.voter);
-                loadTotalVoter(Ballot);
-
-                //strange hack: this event fires twice for some reasons
-                //so I save the last voter address and suppress it if
-                //it is the same as the previous one :P
-                if (lastVoteAdded != event.returnValues.voter){
-                    loadVoter(Ballot, event.returnValues.voter);
-                    lastVoteAdded = event.returnValues.voter;
-                }
-
-                $("#loaderNewVoter").hide();
             })
             .on('data', (event) => {
 
@@ -304,11 +151,33 @@ const myHTML =
             }, (error, event) => { })
             .on('data', (event) => {
                 console.log(event.event); // same results as the optional callback above
-                $("#loaderStartVote").hide();
-                $("#btnStart").hide();
-                $("#btnEnd").show();
-                $("#section_addVoter").hide();
                 loadState(Ballot);
+            })
+            .on('changed', (event) => {
+                // remove event from local database
+            })
+            .on('error', console.error)
+        }
+
+        function watchVoteDone(){
+            Ballot.events.voteDone({
+            }, (error, event) => {
+                var strEventAddress = event.returnValues.voter.toString().toLowerCase();
+                var strAccountAddress = accountaddress.toString().toLowerCase();
+
+                console.log(strEventAddress);
+                console.log(strAccountAddress);
+                console.log(strEventAddress.valueOf() == strAccountAddress.valueOf())
+
+                if (strEventAddress.valueOf() == strAccountAddress.valueOf()) {
+                    console.log("yes");
+                    $("#loaderChoice").hide();
+                    loadState(Ballot);
+                    console.log("b");
+                }
+            })
+            .on('data', (event) => {
+
             })
             .on('changed', (event) => {
                 // remove event from local database
@@ -318,39 +187,9 @@ const myHTML =
 
 //-------------- Loading Section -------------------//
 
-        async function loadBallotContract(myBallotContractAddress){
-        	Ballot = new web3.eth.Contract(ballotABI, myBallotContractAddress);
-        	Ballot.methods.ballotOfficialName().call().then((result) => {
-                $("#lbl_officialname").html("<b>Ballot Official Name: </b>" + result);
-            });
-            Ballot.methods.proposal().call().then((result) => {
-                $("#lbl_proposal").html("<b>Proposal: </b>" + result);
-            });
-
-            loadFinalResult(Ballot);
-            loadTotalVoter(Ballot);
-            loadTotalVotes(Ballot);
-
-            loadState(Ballot);
-
-            $("#lbl_address").html("<b>Address: </b>" + myBallotContractAddress);
-        };
-
         async function loadFinalResult(myBallot){
             myBallot.methods.finalResult().call().then((result) => {
                 $("#lbl_result").html("<b>Result: </b>" + result);
-            });
-        }
-
-        async function loadTotalVoter(myBallot){
-            myBallot.methods.totalVoter().call().then((result) => {
-                $("#lbl_voters_num").html("<b>Voters: </b>" + result);
-            });
-        }
-
-        async function loadTotalVotes(myBallot){
-            myBallot.methods.totalVote().call().then((result) => {
-                $("#lbl_votes_num").html("<b>Votes: </b>" + result);
             });
         }
 
@@ -368,111 +207,51 @@ const myHTML =
                     $("#lbl_state").addClass("label label-danger");
                     $("#lbl_state").html("Ended");
                 }
+                loadVoter(myBallot, accountaddress, result);
                 return result;
             });
         }
 
-        async function loadVoter(myBallot, _myVoterAddress){
+        async function loadVoter(myBallot, _myVoterAddress, _state){
             myBallot.methods.voterRegister(_myVoterAddress).call().then((result) => {
-                console.log(result);
+                if (result.voterName != "" && _state == 1) {
 
-                var voteStatus;
-                if (result.voted){
-                    voteStatus = "<span class='label label-primary'>Voted</span>";
+                    $("#loaderChoice").hide();
+                    $("#section_voting").show();
+
+                    $("#lbl_voter").html("<b>Your Name: </b>" + result.voterName);
+                    console.log(result.voted);
+                    if (result.voted){
+                        $("#btnYes").hide();
+                        $("#btnNo").hide();
+                        $("#lblVoted").html("<span class='label label-primary'>Voted</span>");
+                    }
+                    else {
+                        $("#btnYes").show();
+                        $("#btnNo").show();
+                    }
                 }
-                else {
-                    voteStatus = "<span class='label label-danger'>Not Voted</span>";
+                else{
+                    $("#btnYes").hide();
+                    $("#btnNo").hide();
                 }
-
-                var newRow = voterTable.row.add( [
-                    _myVoterAddress,
-                    result.voterName,
-                    voteStatus
-                ] ).draw(false).node();
-                $('td:eq(2)', newRow).attr('id', _myVoterAddress+"_cell");
-
             } );
 
         }
 
-        function updateNewVote(_myVoterAddress){
-            $("#" + _myVoterAddress+"_cell").html("<span class='label label-primary'>Voted</span>");
-            loadTotalVotes(Ballot);
-        }
-
 //-------------- Button Section -------------------//
 
-        $("#btnEnd").click(async function(){
-            $("#loaderStartVote").show();
-            //Ballot = new web3.eth.Contract(ballotABI, BallotContractAddress);
-
-            var mygas;
-            Ballot.methods.endVote().estimateGas({from: accountaddress})
-            .then(function(gasAmount){
-                mygas = gasAmount;
-            })
-
-        	Ballot.methods.endVote().send({
-                from: accountaddress,
-                gas: mygas,
-                gasPrice: web3.eth.gasPrice
-        	})
-            .on('transactionHash', (hash) => {
-                console.log("a");
-            })
-            .on('receipt', (receipt) => {
-                console.log("b");
-
-            })
-            .on('confirmation', (confirmationNumber, receipt) => {
-                console.log("c");
-            })
-            .on('error', console.error);
-        });
-
-        $("#btnStart").click(async function() {
-            $("#loaderStartVote").show();
-            //Ballot = new web3.eth.Contract(ballotABI, BallotContractAddress);
-
-            var mygas;
-            Ballot.methods.startVote().estimateGas({from: accountaddress})
-            .then(function(gasAmount){
-                mygas = gasAmount;
-            })
-
-        	Ballot.methods.startVote().send({
-                from: accountaddress,
-                gas: mygas,
-                gasPrice: web3.eth.gasPrice
-        	})
-            .on('transactionHash', (hash) => {
-                console.log("a");
-            })
-            .on('receipt', (receipt) => {
-                console.log("b");
-
-            })
-            .on('confirmation', (confirmationNumber, receipt) => {
-                console.log("c");
-            })
-            .on('error', console.error);
-        });
-
-        $("#btnAdd").click(async function() {
-            $("#loaderNewVoter").show();
-            console.log($("#txtNewVoterAddress").val());
-            console.log($("#txtNewVoterName").val());
-
-            //Ballot = new web3.eth.Contract(ballotABI, BallotContractAddress);
+        $("#btnYes").click(async function(){
+            $("#loaderChoice").show();
 
             //estimate first
             var mygas;
-            Ballot.methods.addVoter($("#txtNewVoterAddress").val(), $("#txtNewVoterName").val()).estimateGas({from: accountaddress})
+            	Ballot.methods.doVote(true).estimateGas({from: accountaddress})
             .then(function(gasAmount){
                 mygas = gasAmount;
             })
 
-        	Ballot.methods.addVoter($("#txtNewVoterAddress").val(), $("#txtNewVoterName").val()).send({
+        	Ballot.methods.doVote(true).send({
                 from: accountaddress,
                 gas: mygas,
                 gasPrice: web3.eth.gasPrice
@@ -481,71 +260,46 @@ const myHTML =
                 console.log("a");
             })
             .on('receipt', (receipt) => {
-                console.log("b");
-
+                console.log("done");
             })
             .on('confirmation', (confirmationNumber, receipt) => {
                 console.log("c");
             })
             .on('error', console.error);
-
         });
 
-        $("#btnRefresh").click(async function(){
-           refreshContract($("#contractAddress").val());
+        $("#btnNo").click(async function(){
+            $("#loaderChoice").show();
+
+            //estimate first
+            var mygas;
+            	Ballot.methods.doVote(false).estimateGas({from: accountaddress})
+            .then(function(gasAmount){
+                mygas = gasAmount;
+            })
+
+        	Ballot.methods.doVote(false).send({
+                from: accountaddress,
+                gas: mygas,
+                gasPrice: web3.eth.gasPrice
+        	})
+            .on('transactionHash', (hash) => {
+                console.log("a");
+            })
+            .on('receipt', (receipt) => {
+                console.log("done");
+            })
+            .on('confirmation', (confirmationNumber, receipt) => {
+                console.log("c");
+            })
+            .on('error', console.error);
         });
 
         $("#btnGo").click(async function() {
             $("#loader").show();
             var i = 0;
-            var _ballotOfficialName = $("#official").val();
-            var _proposal = $("#proposal").val();
-
-            ballotContract.deploy({
-                data: ballotByteCode,
-                arguments: [_ballotOfficialName, _proposal],
-            })
-            .send({
-                from: accountaddress,
-                gas: 1308700,
-                gasPrice: web3.eth.gasPrice,
-                gasLimit: 2000000
-            }, (error, transactionHash) => {
-                MyTransactionHash = transactionHash;
-                //getContract(); for private kaleido chain only
-            })
-            .on('error', (error) => {
-                console.log("b");
-            })
-            .on('transactionHash', (transactionHash) => {
-                console.log("c");
-            })
-            .on('receipt', (receipt) => {
-                console.log("DONE" + receipt.contractAddress); // contains the new contract address
-
-                BallotContractAddress = receipt.contractAddress;
-                loadBallotContract(BallotContractAddress);
-                console.log(BallotContractAddress);
-                $("#contractAddress").val(BallotContractAddress);
-                watchVoteStarted(); //start watching for events
-                watchVoterAdded(); //start watching for new voters
-                watchVoteDone(); //start watching for vote done
-                watchVoteEnd(); //start watching for vote end
-                $('#panels_contract').show();
-                $('#panels_voters').show();
-                $("#btnStart").show();
-                $("#btnEnd").hide();
-                $("#loader").hide();
-                $("#section_addVoter").show();
-            })
-            .on('confirmation', (confirmationNumber, receipt) => {
-                console.log(i);
-                i++;
-            })
-            .then((newContractInstance) => {
-                console.log(newContractInstance.options.address) // instance with the new contract address
-            });
-
+            var _ballotAddress = $("#txtBallotAddress").val();
+            getContract(_ballotAddress);
         });
 
 
@@ -555,6 +309,6 @@ const myHTML =
 </html>
 `;
 
-const Test = () => <div dangerouslySetInnerHTML={{ __html: myHTML }} />;
+const Vote = () => <div dangerouslySetInnerHTML={{ __html: myHTML }} />;
 
-export default Test
+export default Vote

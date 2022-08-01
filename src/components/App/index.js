@@ -4,6 +4,8 @@ import Navbar from '../Navbar'
 import Vault from '../Vault'
 import VotePortal from '../VotePortal'
 import Test from '../Test'
+import Ballot from '../Ballot'
+import Vote from '../Vote'
 import Footer from '../Footer'
 import { Routes, Route, Link } from 'react-router-dom'
 import { AddressContext } from '../../utilities/Auth'
@@ -64,8 +66,10 @@ const App = () => {
       <Routes>
         <Route index element={<Home />} />
         <Route path='/vault' element={<Vault />} />
-        <Route path='/vote' element={<VotePortal connectAccount={connectAccount} />} />
+        {/* <Route path='/vote' element={<VotePortal connectAccount={connectAccount} />} /> */}
+        <Route path='/vote' element={<Vote />} />
         <Route path='/test' element={<Test />} />
+        <Route path='/ballot' element={<Test />} />
         <Route path='*' element={<h1>404</h1>} />
       </Routes>
       <Footer />

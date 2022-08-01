@@ -555,6 +555,6 @@ const myHTML =
 </html>
 `;
 
-const Test = () => <div dangerouslySetInnerHTML={{ __html: myHTML }} />;
+const Ballot = () => <div dangerouslySetInnerHTML={{ __html: myHTML }} />;
 
-export default Test
+export default Ballot
