@@ -5,6 +5,7 @@ import Vault from '../Vault'
 import VotePortal from '../VotePortal'
 import Test from '../Test'
 import Ballot from '../Ballot'
+import Proposal from '../Proposal'
 import Vote from '../Vote'
 import Footer from '../Footer'
 import { Routes, Route, Link } from 'react-router-dom'
@@ -15,6 +16,7 @@ const Home = () => {
     <div style={{textAlign: 'center'}}>
       <Link to='/vote'>Vote</Link>
       <Link to='/test'>Test</Link>
+      <Link to='/proposal'>Proposal</Link>
     </div>
   )
 }
@@ -66,10 +68,11 @@ const App = () => {
       <Routes>
         <Route index element={<Home />} />
         <Route path='/vault' element={<Vault />} />
-        {/* <Route path='/vote' element={<VotePortal connectAccount={connectAccount} />} /> */}
-        <Route path='/vote' element={<Vote />} />
+        <Route path='/vote' element={<VotePortal connectAccount={connectAccount} />} />
+        {/* <Route path='/vote' element={<Vote />} /> */}
         <Route path='/test' element={<Test />} />
-        <Route path='/ballot' element={<Test />} />
+        {/* <Route path='/ballot' element={<Test />} /> */}
+        <Route path='/proposal' element={<Proposal />} />
         <Route path='*' element={<h1>404</h1>} />
       </Routes>
       <Footer />

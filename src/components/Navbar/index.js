@@ -1,13 +1,16 @@
 import ConnectButton from '../ConnectButton'
 import { AddressContext } from '../../utilities/Auth'
+import { Link } from 'react-router-dom'
 
 const Logo = () => {
   return (
-    <img
-      style={{cursor: 'pointer', height: '21px'}}
-      alt='Sigmadex logo'
-      src='/images/logo-E-wht.svg'
-    />
+    <Link to='/'>
+      <img
+        style={{cursor: 'pointer', height: '21px'}}
+        alt='Sigmadex logo'
+        src='/images/logo-E-wht.svg'
+      />
+    </Link>
   )
 }
 
