@@ -6,6 +6,7 @@ import VotePortal from '../VotePortal'
 import Test from '../Test'
 import Ballot from '../Ballot'
 import Proposal from '../Proposal'
+import Charts from '../Charts'
 import Vote from '../Vote'
 import Footer from '../Footer'
 import { Routes, Route, Link } from 'react-router-dom'
@@ -73,6 +74,7 @@ const App = () => {
         <Route path='/test' element={<Test />} />
         {/* <Route path='/ballot' element={<Test />} /> */}
         <Route path='/proposal' element={<Proposal />} />
+        <Route path='/charts' element={<Charts />} />
         <Route path='*' element={<h1>404</h1>} />
       </Routes>
       <Footer />
