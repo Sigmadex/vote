@@ -1,12 +1,10 @@
 var styles = {
   progressBar: {
-    // backgroundColor: '#ed1c24',
     backgroundColor: 'transparent',
     position: 'relative',
     height: 10,
     width: '100%',
     borderRadius: '10px',
-    // border: '1px solid #333'
   },
   filler: {
     backgroundColor: '#B3BEC6',
@@ -27,21 +25,18 @@ const ProgressBar = (props) => {
 
 const Filler = (props) => {
   const percent = props.percentage > 100 ? 100 : props.percentage;
-  // return <div className='filler' style={styles.filler} />
-  return <div className='filler' style={{
-    backgroundColor: '#B3BEC6',
-    height: '100%',
-    borderRadius: 'inherit',
-    transition: 'width .2s ease-in',
-    width: `${percent}%`,
-  }} />
-  // return(
-  //   <div className='filler' style={{width: `${props.percentage}%`}}>
-  //     {isNaN(props.percentage)
-  //       ? '0'
-  //         : props.percentage}
-  //   </div>
-  // )
+  return (
+    <div
+      className='filler'
+      style={{
+        backgroundColor: '#B3BEC6',
+        height: '100%',
+        borderRadius: 'inherit',
+        transition: 'width .2s ease-in',
+        width: `${percent}%`,
+      }}
+    />
+  )
 }
 
 const Charts = () => {
@@ -59,16 +54,13 @@ const Charts = () => {
       <span>Your vote has been recorded on chain.</span>
 
       <ul>
-        {Object.keys(proposals).map(proposal => {
+        {Object.keys(proposals).map((proposal, i) => {
           let pct = proposals[proposal] / totalVotes
-          // <li>{proposal}: {proposals[proposal]}</li>
           return (
-            <li>{proposal}: - {pct} - <ProgressBar percentage={pct * 100} /></li>
+            <li key={i}>{proposal}: - {pct} - <ProgressBar percentage={pct * 100} /></li>
           )
         })}
       </ul>
-
-      {/* <ProgressBar percentage={percentage} /> */}
     </div>
   )
 }

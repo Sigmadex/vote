@@ -3,10 +3,12 @@ import './App.css';
 import Navbar from '../Navbar'
 import Vault from '../Vault'
 import VotePortal from '../VotePortal'
+import VotePortal2 from '../VotePortal2'
 import Test from '../Test'
 import Ballot from '../Ballot'
 import Proposal from '../Proposal'
 import Charts from '../Charts'
+import Onboarding from '../Onboarding'
 import Vote from '../Vote'
 import Footer from '../Footer'
 import { Routes, Route, Link } from 'react-router-dom'
@@ -70,11 +72,13 @@ const App = () => {
         <Route index element={<Home />} />
         <Route path='/vault' element={<Vault />} />
         <Route path='/vote' element={<VotePortal connectAccount={connectAccount} />} />
+        <Route path='/vote2' element={<VotePortal2 connectAccount={connectAccount} />} />
         {/* <Route path='/vote' element={<Vote />} /> */}
         <Route path='/test' element={<Test />} />
         {/* <Route path='/ballot' element={<Test />} /> */}
         <Route path='/proposal' element={<Proposal />} />
         <Route path='/charts' element={<Charts />} />
+        <Route path='/onboarding' element={<Onboarding />} />
         <Route path='*' element={<h1>404</h1>} />
       </Routes>
       <Footer />

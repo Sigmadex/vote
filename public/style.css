@@ -51,10 +51,11 @@ body {
   background-color: #fff;
   padding: 20px;
   animation: scale 0.5s ease;
-  border-radius: 10px;
-  box-shadow: 6.7px 6.7px 5.3px rgba(0, 0, 0, 0.02),
-    22.3px 22.3px 17.9px rgba(0, 0, 0, 0.03),
-    100px 100px 80px rgba(0, 0, 0, 0.05);
+  border-style: none;
+  border-radius: 20px;
+  box-shadow: 0px 4px 25px rgba(64, 76, 85, 0.15);
+  /* position: absolute; */
+  text-align: center;
 }
 
 .modal-body {

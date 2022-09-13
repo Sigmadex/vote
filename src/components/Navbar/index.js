@@ -36,7 +36,7 @@ const Navbar = ({connectAccount}) => {
       <span>
         <img alt='AVAX logo' src='/images/avax-logo-white.svg' />
         <span style={{paddingLeft: '26px'}}>
-          <ConnectButton connectAccount={connectAccount} />
+          <ConnectButton connectAccount={connectAccount} navbar />
         </span>
       </span>
     </div>

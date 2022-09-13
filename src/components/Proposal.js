@@ -213,10 +213,25 @@ const Proposal = () => {
     let delegatevote = contract.delegate(addressVal)
   }
 
+  function canUserVote(address = '0x7aE2B1162444456894C3711bBECCEf207Facd790') {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    provider.send("eth_requestAccounts", []);
+    const signer = provider.getSigner()
+    // const contract = new ethers.Contract(contractAddress, abi, signer);
+    const contract = new ethers.Contract(contractAddress, abi, provider)
+    // await contract.totalAllocPoint()
+    // let voters = contract.voters()
+    // let voter = contract.voters
+    // let voters = contract.methods.voters().call()
+    // // let voter = contract.voters[1]
+    // console.log(voters)
+  }
+
   return (
     <div>
       <h1>Proposal</h1>
       <button onClick={getVotes}>Get votes</button>
+      <button onClick={canUserVote}>Can this address vote?</button>
 
       <div className="container">
           <h1>Voting DApp</h1>

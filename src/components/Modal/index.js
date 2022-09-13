@@ -1,29 +1,32 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
-function Modal({text}) {
+function Modal({text, display}) {
   const [modalOpen, toggleModal] = useState(false)
+
+  useEffect(() => {
+    toggleModal(display)
+  }, [])
 
   return (
     <div>
-      <button onClick={() => toggleModal(!modalOpen)}>toggle modal</button>
+      {/* button is for debugging */}
+      {/* <button onClick={() => toggleModal(!modalOpen)}>toggle modal</button>  */}
       <div
         className='modal'
         style={{display: modalOpen ? 'block' : 'none'}}
         onClick={() => toggleModal(!modalOpen)}
       >
         <div className='modal-content'>
-          <div className='modal-header'>
+          <span>
             <img
-              style={{width: '32px', height: '32px'}}
+              style={{width: '32px', height: '32px', marginBottom: '16px'}}
               alt='Warning'
               src='/images/warning.png'
             />
-          </div>
-          <div className="modal-body">
-            <p>
-              {text}
-            </p>
-          </div>
+          </span>
+          <span style={{width: 218}}>
+            This wallet does not hold a vote NFT.
+          </span>
         </div>
       </div>
     </div>
