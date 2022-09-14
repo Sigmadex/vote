@@ -21,6 +21,7 @@ const navbarButtonStyles = {
   borderRadius: '10px',
   backgroundColor: 'transparent',
   fontSize: '14px',
+  fontWeight: '600',
   cursor: 'pointer',
   color: '#ffffff'
 }

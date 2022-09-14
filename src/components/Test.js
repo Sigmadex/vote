@@ -1,28 +1,73 @@
-import Modal from './Modal'
-import { ethers } from 'ethers'
-import { formatBytes, parseBytes } from '../utilities/formatting'
+import { useState } from 'react'
+
+let proposal = {
+  options: [
+    {
+      optionName: 'A',
+      optionDescription: ''
+    },
+    {
+      optionName: 'B',
+      optionDescription: ''
+    },
+    {
+      optionName: 'C',
+      optionDescription: ''
+    }
+  ]
+}
+
+const optionButtonStyles = {
+  fontFamily: 'Work Sans',
+  width: '142px',
+  height: '109px',
+  background: '#FFFFFF',
+  border: '1px solid #B3BEC6',
+  boxShadow: '0px 4px 20px rgba(166, 194, 215, 0.3)',
+  borderRadius: '20px',
+  cursor: 'pointer',
+  color: '#404C55'
+}
+
+const disabledOptionButtonStyles = {
+  fontFamily: 'Work Sans',
+  width: '142px',
+  height: '109px',
+  background: '#ECF2F5',
+  borderStyle: 'none',
+  boxShadow: '0px 4px 20px rgba(166, 194, 215, 0.3)',
+  borderRadius: '20px',
+  cursor: 'not-allowed',
+  color: '#B3BEC6'
+}
 
 function Test() {
-  // async function parseBytes(args) {
-  //   let bytes = args[0]
-  //   let name = ethers.utils.parseBytes32String(bytes)
-  //   return name
-  // }
+  let [selectedOption, setOption] = useState(null)
+  let options = ['A', 'B', 'C']
 
-  let text = "Hello World!"
-
-  let bytes32 = formatBytes(text)
-  // "0x48656c6c6f20576f726c64210000000000000000000000000000000000000000"
-  console.log(bytes32)
-  //
-  let originalText = parseBytes(bytes32)
-  console.log(originalText)
-
-  // console.log(parseBytes('0x0000000000000000000000000000000000000000000000000000000000000000'))
+  function castVote() {
+    if (selectedOption) {
+      console.log('casting vote for', selectedOption)
+    } else {
+      alert('Please select an option')
+    }
+  }
 
   return (
     <div>
-      <Modal text={'This wallet does not hold a vote NFT.'} />
+      <h1>Test</h1>
+      {options.map((option, i) =>
+        <button
+          key={i}
+          style={optionButtonStyles}
+          onClick={() => setOption(option)}
+        >
+          <div style={{fontWeight: '700', fontSize: '14px'}}>Option</div>
+          <div style={{fontWeight: '700', fontSize: '40px'}}>{option}</div>
+        </button>
+      )}
+      Selected option: {selectedOption}
+      <button onClick={() => castVote()}>Cast Vote</button>
     </div>
   )
 }

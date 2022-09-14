@@ -3,7 +3,6 @@ import './App.css';
 import Navbar from '../Navbar'
 import Vault from '../Vault'
 import VotePortal from '../VotePortal'
-import VotePortal2 from '../VotePortal2'
 import Test from '../Test'
 import Ballot from '../Ballot'
 import Proposal from '../Proposal'
@@ -69,16 +68,13 @@ const App = () => {
     <AddressContext.Provider value={walletAddress}>
       <Navbar connectAccount={connectAccount} />
       <Routes>
-        <Route index element={<Home />} />
-        <Route path='/vault' element={<Vault />} />
-        <Route path='/vote' element={<VotePortal connectAccount={connectAccount} />} />
-        <Route path='/vote2' element={<VotePortal2 connectAccount={connectAccount} />} />
-        {/* <Route path='/vote' element={<Vote />} /> */}
+        {/* <Route index element={<Home />} /> */}
+        <Route index element={<VotePortal connectAccount={connectAccount} />} />
+        {/* <Route path='/vault' element={<Vault />} /> */}
         <Route path='/test' element={<Test />} />
         {/* <Route path='/ballot' element={<Test />} /> */}
         <Route path='/proposal' element={<Proposal />} />
-        <Route path='/charts' element={<Charts />} />
-        <Route path='/onboarding' element={<Onboarding />} />
+        {/* <Route path='/onboarding' element={<Onboarding />} /> */}
         <Route path='*' element={<h1>404</h1>} />
       </Routes>
       <Footer />

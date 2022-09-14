@@ -49,19 +49,27 @@ const Charts = () => {
   let percentage = 100
 
   return (
-    <div>
-      <h1>Vote Portal</h1>
-      <span>Your vote has been recorded on chain.</span>
+    // TODO: - Most votes needs heavier font weight
+    Object.keys(proposals).map((proposal, i) => {
+      let pct = proposals[proposal] / totalVotes
+      return (
+        <div key={i} style={{display: 'inline-block', marginBottom: 7}}>
+          <div style={{width: '150px', float: 'left', textAlign: 'left'}}>
+            Option {proposal}
+          </div>
+          <div style={{width: '45px', float: 'left', textAlign: 'left', fontWeight: 600}}>
+            {parseInt(pct * 100)}%
+          </div>
+          <div style={{width: '267px', float: 'left'}}>
+            {/* TODO: - Align vertically */}
+            <div style={{marginTop: 5}}>
+              <ProgressBar percentage={pct * 100} />
+            </div>
+          </div>
+        </div>
+      )
+    })
 
-      <ul>
-        {Object.keys(proposals).map((proposal, i) => {
-          let pct = proposals[proposal] / totalVotes
-          return (
-            <li key={i}>{proposal}: - {pct} - <ProgressBar percentage={pct * 100} /></li>
-          )
-        })}
-      </ul>
-    </div>
   )
 }
 

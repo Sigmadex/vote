@@ -22,7 +22,6 @@ const VotePortal = ({connectAccount}) => {
     // }
   }
 
-  // MARK: - Runs when VotePortal component first loads
   useEffect(() => {
     getConnectedAccount()
   }, [])
@@ -40,9 +39,9 @@ const VotePortal = ({connectAccount}) => {
   }
 
   // MARK: - Runs when walletAddress is set in AddressContext
-  useEffect(() => {
-    getKeyboards()
-  }, [walletAddress])
+  // useEffect(() => {
+  //   getKeyboards()
+  // }, [walletAddress])
 
   let testProposal = {
     id: 'SEP-002',
@@ -65,7 +64,7 @@ const VotePortal = ({connectAccount}) => {
   }
 
   return (
-    <div>
+    <div style={{paddingTop: '266px', paddingBottom: '266px'}}>
       <VoteCard proposal={testProposal} connectAccount={connectAccount} />
     </div>
   );
