@@ -16,12 +16,12 @@ function Modal({text, display}) {
         style={{display: modalOpen ? 'block' : 'none'}}
         onClick={() => toggleModal(!modalOpen)}
       >
-        <div className='modal-content'>
+        <div className='modal-content' style={{textAlign: 'center'}}>
           <span>
             <img
-              style={{width: '32px', height: '32px', marginBottom: '16px'}}
+              style={{width: '32px', height: '32px', marginBottom: 20}}
               alt='Warning'
-              src='/images/warning.png'
+              src='/images/warning.svg'
             />
           </span>
           <span style={{width: 218}}>

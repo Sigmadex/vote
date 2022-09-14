@@ -1,7 +1,7 @@
 body {
   /* background: #b2ddad;
-  background-image: url('/src/images/endless-layered.png'); */
-  background-image: url('/public/images/endless-layered.png'), linear-gradient(#b2ddad, #74bce5);
+  background-image: url('/src/images/endless-layered.svg'); */
+  background-image: url('/public/images/endless-layered.svg'), linear-gradient(#b2ddad, #74bce5);
   /* background-image: url(foo.jpg) center center no-repeat;  */
   background-position:fixed;
   background-repeat: no-repeat;

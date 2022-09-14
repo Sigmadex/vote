@@ -47,15 +47,16 @@ body {
   /* max-width: 500px; */
   width: 262px;
   height: 131px;
-  text-align: center;
+  /* text-align: center; */
+  /* display: flex; */
+  /* justify-content: center; */
   background-color: #fff;
-  padding: 20px;
+  padding: 15px 22px 20px 22px;
   animation: scale 0.5s ease;
   border-style: none;
   border-radius: 20px;
   box-shadow: 0px 4px 25px rgba(64, 76, 85, 0.15);
   /* position: absolute; */
-  text-align: center;
 }
 
 .modal-body {

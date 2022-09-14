@@ -68,13 +68,13 @@ function VoteCard({proposal, connectAccount}) {
         <img
           // style={{width: '468px', height: '266px'}}
           alt='Pixel Guys'
-          src='/images/pixel-guys.png'
+          src='/images/pixel-guys.svg'
         />
         <div style={pollStyles}>
-          <div style={{fontSize: '38px', fontWeight: '700', paddingTop: 44, marginBottom: 27}}>
+          <div style={{fontSize: '38px', fontWeight: '700', paddingTop: 38, marginBottom: 24}}>
             Vote Portal
           </div>
-          <div style={{marginBottom: 35}}>
+          <div style={{marginBottom: 32}}>
             Your vote has been recorded on chain.
           </div>
           <div style={{display: 'flex', justifyContent: 'center'}}>
@@ -82,7 +82,6 @@ function VoteCard({proposal, connectAccount}) {
               <Charts />
             </div>
           </div>
-
         </div>
       </div>
     )
@@ -93,21 +92,21 @@ function VoteCard({proposal, connectAccount}) {
       <img
         // style={{width: '468px', height: '266px'}}
         alt='Pixel Guys'
-        src='/images/pixel-guys.png'
+        src='/images/pixel-guys.svg'
       />
       <div>
         <div style={cardStyles}>
-          <div style={{fontSize: '38px', fontWeight: '700', paddingTop: 44, marginBottom: 27}}>
+          <div style={{fontSize: '38px', fontWeight: '700', paddingTop: 38, marginBottom: 24}}>
             Vote Portal
           </div>
-          <div style={{marginBottom: '9px'}}>
+          <div style={{marginBottom: 14}}>
             {walletAddress
               ? 'Select one of the three options below and submit your vote.'
               : 'Connect your wallet to see if you qualify for voting.'}
           </div>
           <div style={{display: 'flex', justifyContent: 'center', marginBottom: 27}}>
-            <div style={{width: 357}}>
-              <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: 8}}>
+            <div style={{width: 354}}>
+              <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: 6}}>
                 <span>
                   Proposal ID:
                 </span>
@@ -115,7 +114,7 @@ function VoteCard({proposal, connectAccount}) {
                   {proposal.id}
                 </span>
               </div>
-              <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: 8}}>
+              <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: 6}}>
                 <span>
                   RE:
                 </span>
@@ -123,7 +122,7 @@ function VoteCard({proposal, connectAccount}) {
                   {proposal.subject}
                 </span>
               </div>
-              <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: 8}}>
+              <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: 3}}>
                 <span>
                   Forum Link:
                 </span>
@@ -142,8 +141,8 @@ function VoteCard({proposal, connectAccount}) {
                   disabled={!walletAddress}
                   onClick={() => setOption(proposal.optionName)}
                 >
-                  <div style={{fontWeight: '700', fontSize: '14px'}}>Option</div>
-                  <div style={{fontWeight: '700', fontSize: '40px'}}>{proposal.optionName}</div>
+                  <span style={{fontWeight: '700', fontSize: '14px', display: 'block', marginTop: 8, marginBottom: -4}}>Option</span>
+                  <span style={{fontWeight: '700', fontSize: '40px', display: 'block'}}>{proposal.optionName}</span>
                 </button>
               )}
             </div>

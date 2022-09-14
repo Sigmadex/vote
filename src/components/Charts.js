@@ -53,7 +53,7 @@ const Charts = () => {
     Object.keys(proposals).map((proposal, i) => {
       let pct = proposals[proposal] / totalVotes
       return (
-        <div key={i} style={{display: 'inline-block', marginBottom: 7}}>
+        <div key={i} style={{display: 'inline-block', marginBottom: 4}}>
           <div style={{width: '150px', float: 'left', textAlign: 'left'}}>
             Option {proposal}
           </div>
