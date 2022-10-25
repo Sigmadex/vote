@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { AddressContext } from '../../utilities/Auth'
 import ConnectButton from '../ConnectButton'
 import CastVoteButton from '../CastVoteButton'
@@ -47,10 +47,12 @@ const disabledOptionButtonStyles = {
   color: '#B3BEC6'
 }
 
-function VoteCard({proposal, connectAccount}) {
+function VoteCard({proposal, connectAccount, proposals3}) {
   const walletAddress = useContext(AddressContext)
   const [selectedOption, setOption] = useState(null)
   const [hasVoted, displayPoll] = useState(false)
+  // console.log(proposals3)
+  const [proposals, setProposals] = useState([['X', ''], ['Y', ''], ['Z', '']])
 
   function castVote() {
     if (selectedOption) {
@@ -61,32 +63,6 @@ function VoteCard({proposal, connectAccount}) {
     }
   }
 
-  // TODO: - Refactor
-  if (hasVoted) {
-    return (
-      <div style={{textAlign: 'center', fontSize: '14px'}}>
-        <img
-          // style={{width: '468px', height: '266px'}}
-          alt='Pixel Guys'
-          src='/images/pixel-guys.svg'
-        />
-        <div style={pollStyles}>
-          <div style={{fontSize: '38px', fontWeight: '700', paddingTop: 38, marginBottom: 24}}>
-            Vote Portal
-          </div>
-          <div style={{marginBottom: 32}}>
-            Your vote has been recorded on chain.
-          </div>
-          <div style={{display: 'flex', justifyContent: 'center'}}>
-            <div style={{width: 462}}>
-              <Charts />
-            </div>
-          </div>
-        </div>
-      </div>
-    )
-  }
-
   return (
     <div style={{textAlign: 'center', fontSize: '14px'}}>
       <img
@@ -94,67 +70,92 @@ function VoteCard({proposal, connectAccount}) {
         alt='Pixel Guys'
         src='/images/pixel-guys.svg'
       />
-      <div>
-        <div style={cardStyles}>
-          <div style={{fontSize: '38px', fontWeight: '700', paddingTop: 38, marginBottom: 24}}>
-            Vote Portal
-          </div>
-          <div style={{marginBottom: 14}}>
-            {walletAddress
-              ? 'Select one of the three options below and submit your vote.'
-              : 'Connect your wallet to see if you qualify for voting.'}
-          </div>
-          <div style={{display: 'flex', justifyContent: 'center', marginBottom: 27}}>
-            <div style={{width: 354}}>
-              <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: 6}}>
-                <span>
-                  Proposal ID:
-                </span>
-                <span style={{fontWeight: '700'}}>
-                  {proposal.id}
-                </span>
-              </div>
-              <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: 6}}>
-                <span>
-                  RE:
-                </span>
-                <span style={{fontWeight: '700'}}>
-                  {proposal.subject}
-                </span>
-              </div>
-              <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: 3}}>
-                <span>
-                  Forum Link:
-                </span>
-                <span style={{fontWeight: '700'}}>
-                  <a style={{textDecoration: 'none', color: 'inherit'}} href={proposal.link}>View</a>
-                </span>
+      {hasVoted
+        ? <div style={pollStyles}>
+            <div style={{fontSize: '38px', fontWeight: '700', paddingTop: 38, marginBottom: 24}}>
+              Vote Portal
+            </div>
+            <div style={{marginBottom: 32}}>
+              Your vote has been recorded on chain.
+            </div>
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+              <div style={{width: 462}}>
+                <Charts proposals3={proposals3} />
               </div>
             </div>
           </div>
-          <div style={{display: 'flex', justifyContent: 'center'}}>
-            <div style={{width: 499, display: 'flex', justifyContent: 'space-between', marginBottom: 34}}>
-              {proposal.options.map((proposal, i) =>
-                <button
-                  key={i}
-                  style={walletAddress ? optionButtonStyles : disabledOptionButtonStyles}
-                  disabled={!walletAddress}
-                  onClick={() => setOption(proposal.optionName)}
-                >
-                  <span style={{fontWeight: '700', fontSize: '14px', display: 'block', marginTop: 8, marginBottom: -4}}>Option</span>
-                  <span style={{fontWeight: '700', fontSize: '40px', display: 'block'}}>{proposal.optionName}</span>
-                </button>
-              )}
+        : <div>
+            <div style={cardStyles}>
+              <div style={{fontSize: '38px', fontWeight: '700', paddingTop: 38, marginBottom: 24}}>
+                Vote Portal
+              </div>
+            <div style={{marginBottom: 14}}>
+              {walletAddress
+                ? 'Select one of the three options below and submit your vote.'
+                : 'Connect your wallet to see if you qualify for voting.'}
             </div>
+            <div style={{display: 'flex', justifyContent: 'center', marginBottom: 27}}>
+              <div style={{width: 354}}>
+                <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: 6}}>
+                  <span>
+                    Proposal ID:
+                  </span>
+                  <span style={{fontWeight: '700'}}>
+                    {proposal.id}
+                  </span>
+                </div>
+                <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: 6}}>
+                  <span>
+                    RE:
+                  </span>
+                  <span style={{fontWeight: '700'}}>
+                    {proposal.subject}
+                  </span>
+                </div>
+                <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: 3}}>
+                  <span>
+                    Forum Link:
+                  </span>
+                  <span style={{fontWeight: '700'}}>
+                    <a style={{textDecoration: 'none', color: 'inherit'}} href={proposal.link}>View</a>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+              <div style={{width: 499, display: 'flex', justifyContent: 'space-between', marginBottom: 34}}>
+                {/* {proposals.map((proposal, i) =>
+                  <button
+                    key={i}
+                    style={walletAddress ? optionButtonStyles : disabledOptionButtonStyles}
+                    disabled={!walletAddress}
+                    onClick={() => setOption(proposal[0])}
+                  >
+                    <span style={{fontWeight: '700', fontSize: '14px', display: 'block', marginTop: 8, marginBottom: -4}}>Option</span>
+                    <span style={{fontWeight: '700', fontSize: '40px', display: 'block'}}>{proposal[0]}</span>
+                  </button>
+                )} */}
+                {proposals3.map((proposal, i) =>
+                  <button
+                    // key={i}
+                    style={walletAddress ? optionButtonStyles : disabledOptionButtonStyles}
+                    disabled={!walletAddress}
+                    onClick={() => setOption(proposal[0])}
+                  >
+                    <span style={{fontWeight: '700', fontSize: '14px', display: 'block', marginTop: 8, marginBottom: -4}}>Option</span>
+                    <span style={{fontWeight: '700', fontSize: '40px', display: 'block'}}>{proposal[0]}</span>
+                  </button>
+                )}
+              </div>
+            </div>
+            <div>
+              {walletAddress
+                ? <CastVoteButton text={'Cast Vote'} castVote={castVote} />
+                : <ConnectButton connectAccount={connectAccount} />}
+            </div>
+            <Modal text={'This wallet does not hold a vote NFT.'} display={false} />
           </div>
-          <div>
-            {walletAddress
-              ? <CastVoteButton text={'Cast Vote'} castVote={castVote} />
-              : <ConnectButton connectAccount={connectAccount} />}
-          </div>
-          <Modal text={'This wallet does not hold a vote NFT.'} display={false} />
-        </div>
-      </div>
+        </div>}
     </div>
   )
 }

@@ -3,7 +3,7 @@ body {
   background-image: url('/src/images/endless-layered.svg'); */
   background-image: url('/public/images/endless-layered.svg'), linear-gradient(#b2ddad, #74bce5);
   /* background-image: url(foo.jpg) center center no-repeat;  */
-  background-position:fixed;
+  background-position: fixed;
   background-repeat: no-repeat;
   background-size: cover;
   /* height:700px; */
@@ -13,6 +13,7 @@ body {
   background-attachment: fixed;
   padding-top: 90px;
   /* padding-bottom: 90px; */
+  overscroll-behavior: none;
 }
 
 .App {

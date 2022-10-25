@@ -1,27 +1,28 @@
 import { useState, useEffect } from 'react'
 import './App.css';
 import Navbar from '../Navbar'
-import Vault from '../Vault'
 import VotePortal from '../VotePortal'
 import Test from '../Test'
-import Ballot from '../Ballot'
 import Proposal from '../Proposal'
-import Charts from '../Charts'
-import Onboarding from '../Onboarding'
-import Vote from '../Vote'
 import Footer from '../Footer'
-import { Routes, Route, Link } from 'react-router-dom'
+import Dapp from '../Dapp'
+// import Vault from '../Vault'
+// import Ballot from '../Ballot'
+// import Charts from '../Charts'
+// import Onboarding from '../Onboarding'
+// import Vote from '../Vote'
+import { Routes, Route } from 'react-router-dom'
 import { AddressContext } from '../../utilities/Auth'
 
-const Home = () => {
-  return (
-    <div style={{textAlign: 'center'}}>
-      <Link to='/vote'>Vote</Link>
-      <Link to='/test'>Test</Link>
-      <Link to='/proposal'>Proposal</Link>
-    </div>
-  )
-}
+// const Home = () => {
+//   return (
+//     <div style={{textAlign: 'center'}}>
+//       <Link to='/vote'>Vote</Link>
+//       <Link to='/test'>Test</Link>
+//       <Link to='/proposal'>Proposal</Link>
+//     </div>
+//   )
+// }
 
 const App = () => {
   const [walletAddress, setWalletAddress] = useState(null)
@@ -68,13 +69,10 @@ const App = () => {
     <AddressContext.Provider value={walletAddress}>
       <Navbar connectAccount={connectAccount} />
       <Routes>
-        {/* <Route index element={<Home />} /> */}
         <Route index element={<VotePortal connectAccount={connectAccount} />} />
-        {/* <Route path='/vault' element={<Vault />} /> */}
         <Route path='/test' element={<Test />} />
-        {/* <Route path='/ballot' element={<Test />} /> */}
         <Route path='/proposal' element={<Proposal />} />
-        {/* <Route path='/onboarding' element={<Onboarding />} /> */}
+        <Route path='/dapp' element={<Dapp />} />
         <Route path='*' element={<h1>404</h1>} />
       </Routes>
       <Footer />
