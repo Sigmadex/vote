@@ -8,6 +8,7 @@ import Footer from '../Footer'
 import Dapp from '../Dapp'
 import CheckVoterAddress from '../CheckVoterAddress'
 import Check from '../Check'
+import Check2 from '../Check2'
 // import Vault from '../Vault'
 // import Ballot from '../Ballot'
 // import Charts from '../Charts'
@@ -77,6 +78,7 @@ const App = () => {
         <Route path='/dapp' element={<Dapp />} />
 
         <Route path='/check' element={<Check />} />
+        <Route path='/check2' element={<Check2 />} />
 
         <Route path='*' element={<h1>404</h1>} />
       </Routes>

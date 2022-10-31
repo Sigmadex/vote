@@ -49,10 +49,10 @@ const disabledOptionButtonStyles = {
   color: '#B3BEC6'
 }
 
-function VoteCard({proposal, connectAccount, proposals3, voteProposal, testFunction}) {
+function VoteCard({proposal, connectAccount, proposals3, voteProposal, voterStatus}) {
   const walletAddress = useContext(AddressContext)
   const [selectedOption, setOption] = useState(undefined)
-  const [hasVoted, displayPoll] = useState(false)
+  const [hasVoted, displayPoll] = useState(true)
   // console.log(proposals3)
   const [proposals, setProposals] = useState([['X', ''], ['Y', ''], ['Z', '']])
 
@@ -66,6 +66,8 @@ function VoteCard({proposal, connectAccount, proposals3, voteProposal, testFunct
     }
   }
 
+  console.log(voterStatus?.voted)
+
   return (
     <div style={{textAlign: 'center', fontSize: '14px'}}>
       <img
@@ -73,7 +75,8 @@ function VoteCard({proposal, connectAccount, proposals3, voteProposal, testFunct
         alt='Pixel Guys'
         src='/images/pixel-guys.svg'
       />
-      {hasVoted
+      {voterStatus?.voted 
+        /* Polls */
         ? <div style={pollStyles}>
             <div style={{fontSize: '38px', fontWeight: '700', paddingTop: 38, marginBottom: 24}}>
               Vote Portal
@@ -87,6 +90,7 @@ function VoteCard({proposal, connectAccount, proposals3, voteProposal, testFunct
               </div>
             </div>
           </div>
+        /* Voting */
         : <div>
             <div style={cardStyles}>
               <div style={{fontSize: '38px', fontWeight: '700', paddingTop: 38, marginBottom: 24}}>

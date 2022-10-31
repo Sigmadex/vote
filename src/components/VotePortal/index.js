@@ -15,6 +15,9 @@ const VotePortal = ({connectAccount}) => {
   const [token, setToken] = useState();
   const [proposals, setProposals] = useState([]);
   const [chairperson, setChairperson] = useState('');
+  const [voterAddressToCheck, setVoterAddressToCheck] = useState('0x1F918574c45199DD8d6dBb0B2975e5859A4bB512')
+  const [voterStatus, setVoterStatus] = useState()
+  // const [hasVoted, setHasVoted] = useState(false) // redundant?
 
   async function _initialize() {
     await _intializeEthers();
@@ -77,6 +80,23 @@ const VotePortal = ({connectAccount}) => {
     // }
   }
 
+  const checkAddressVoter = async (address) => {
+    // console.log('checking status for', address)
+    try {
+      const voterData = await token.voters(address);
+      setVoterStatus(voterData);
+    } catch (err) {
+      console.log(err);
+      setVoterStatus('An error has occured');
+    }
+  };
+
+  /* automatically triggers when token is defined */
+  useEffect(() => {
+    // checkAddressVoter('0x29bcDdA82173dC481b0F03ab06898091c2498634')
+    checkAddressVoter(walletAddress)
+  }, [walletAddress])  
+
   useEffect(() => {
     getConnectedAccount()
   }, [])
@@ -122,7 +142,19 @@ const VotePortal = ({connectAccount}) => {
 
   return (
     <div style={{paddingTop: '266px', paddingBottom: '266px'}}>
-      <VoteCard proposal={testProposal} connectAccount={connectAccount} proposals3={proposals} voteProposal={voteProposal} />
+
+      {/* {voterStatus?.voted
+        ? <h3>Already Voted, Show Results</h3>
+        : <h3>Not Voted, Select Proposal</h3>} */}
+
+      <VoteCard 
+        proposal={testProposal} 
+        connectAccount={connectAccount} 
+        proposals3={proposals} 
+        voteProposal={voteProposal} 
+        voterStatus={voterStatus}
+      />
+
       {/* {proposals.map((proposal, index) => {
           const name = parseName(parseBytes(proposal.name));
           const voteCount = proposal.voteCount._hex;

@@ -1,17 +1,22 @@
 import { useState, useEffect } from 'react'
-import CheckVoterAddress from "./CheckVoterAddress";
 import { ethers } from 'ethers'
 import contractAddress from '../ABI/contract-address'
 import TokenArtifact from '../ABI/Ballot'
 
-const Check = () => {
-  const [token, setToken] = useState()
+const Check2 = () => {
+  const [token, setToken] = useState(undefined)
   const [voterAddressToCheck, setVoterAddressToCheck] = useState('0x1F918574c45199DD8d6dBb0B2975e5859A4bB512')
   const [voterStatus, setVoterStatus] = useState()
 
-  const checkAddressVoter = async () => {
+  /* automatically triggers when token is defined */
+  useEffect(() => {
+    checkAddressVoter('0x29bcDdA82173dC481b0F03ab06898091c2498634')
+  }, [token])
+
+  const checkAddressVoter = async (address) => {
+    // console.log('checking status for', address)
     try {
-      const voterData = await token.voters(`${voterAddressToCheck}`);
+      const voterData = await token.voters(address);
       setVoterStatus(voterData);
     } catch (err) {
       console.log(err);
@@ -40,19 +45,17 @@ const Check = () => {
 
   useEffect(() => {
     init();
-  }, []);
+  }, []);  
 
   return (
     <div>
-      <h1>Check</h1>
-      <CheckVoterAddress 
-        voterAddressToCheck={voterAddressToCheck} 
-        setVoterAddressToCheck={setVoterAddressToCheck} 
-        checkAddressVoter={checkAddressVoter} 
-        voterStatus={voterStatus} 
-      />
+      <h1>Check 2</h1>
+      <h3>Checking if {voterAddressToCheck} has voted</h3>
+      {voterStatus?.voted
+        ? <h3>Already Voted, Show Results</h3>
+        : <h3>Not Voted, Select Proposal</h3>}
     </div>
   )
 };
 
-export default Check
+export default Check2

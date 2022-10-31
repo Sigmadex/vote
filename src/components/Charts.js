@@ -1,3 +1,5 @@
+import { parseName, parseBytes } from '../utils';
+
 var styles = {
   progressBar: {
     backgroundColor: 'transparent',
@@ -50,31 +52,108 @@ const Charts = ({proposals3}) => {
   let percentage = 100
   let mostVoted = ''
   if (proposals3.length) {
-    mostVoted = proposals3.sort((a, b) => b[1] - a[1]).shift()[0]
+
+    let voteCounts = proposals3.map(proposal => Number(proposal.voteCount._hex))
+    // console.log(voteCounts)
+
+    // console.log(proposals3);
+    // mostVoted = proposals3.sort((a, b) => b[1] - a[1]).shift()[0]
   }
 
-  return (
-    // TODO: - Most votes needs heavier font weight
+    // Object.keys(proposals).map((proposal, i) => {
+    //   let pct = proposals[proposal] / totalVotes
+    //   return (
+    //     <div key={i} style={{display: 'inline-block', marginBottom: 4}}>
+    //       <div style={{width: '150px', float: 'left', textAlign: 'left'}}>
+    //         Option {proposal}
+    //       </div>
+    //       <div style={{width: '45px', float: 'left', textAlign: 'left', fontWeight: 600}}>
+    //         {parseInt(pct * 100)}%
+    //       </div>
+    //       <div style={{width: '267px', float: 'left'}}>
+    //         {/* TODO: - Align vertically */}
+    //         <div style={{marginTop: 5}}>
+    //           <ProgressBar percentage={pct * 100} />
+    //         </div>
+    //       </div>
+    //     </div>
+    //   )
+    // })
 
-    Object.keys(proposals).map((proposal, i) => {
-      let pct = proposals[proposal] / totalVotes
-      return (
-        <div key={i} style={{display: 'inline-block', marginBottom: 4}}>
-          <div style={{width: '150px', float: 'left', textAlign: 'left'}}>
-            Option {proposal}
-          </div>
-          <div style={{width: '45px', float: 'left', textAlign: 'left', fontWeight: 600}}>
-            {parseInt(pct * 100)}%
-          </div>
-          <div style={{width: '267px', float: 'left'}}>
-            {/* TODO: - Align vertically */}
-            <div style={{marginTop: 5}}>
-              <ProgressBar percentage={pct * 100} />
+  return (
+    <div>
+        {proposals3.map((proposal, index) => {
+          const name = parseName(parseBytes(proposal.name)) 
+          const pct = Number(proposal.voteCount._hex)
+          
+          return (
+            <div key={index} style={{display: 'inline-block', marginBottom: 4}}>
+              <div style={{width: '150px', float: 'left', textAlign: 'left'}}>
+                Option {name}
+              </div>
+              <div style={{width: '45px', float: 'left', textAlign: 'left', fontWeight: 600}}>
+                {parseInt(pct * 100)}%
+              </div>
+              <div style={{width: '267px', float: 'left'}}>
+                {/* TODO: - Align vertically */}
+                <div style={{marginTop: 5}}>
+                  <ProgressBar percentage={pct * 100} />
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      )
-    })
+          )
+        })}
+    </div>
+  )
+}
+
+export default Charts
+
+    // TODO: - Most votes needs heavier font weight (if voteCount === mostVotes, font is bold)
+
+    /* 
+        {proposals.map((proposal, index) => {
+          const name = parseName(parseBytes(proposal.name));
+          const voteCount = proposal.voteCount._hex;
+          return (
+            <div key={index} style={{ padding: '1rem 0' }}>
+              🗳 {name} - {Number(voteCount)}
+              <button
+                style={{ marginLeft: '2em' }}
+                onClick={() => voteProposal(index)}
+              >
+                Vote
+              </button>
+            </div>
+          );
+        })}
+    */
+    // {proposals3.map((proposal, index) => {  
+    //   const name = proposal.name 
+    //   return (
+    //     <h3>{name}</h3>
+    //   )
+    // })}
+
+    // Object.keys(proposals).map((proposal, i) => {
+    //   let pct = proposals[proposal] / totalVotes
+    //   return (
+    //     <div key={i} style={{display: 'inline-block', marginBottom: 4}}>
+    //       <div style={{width: '150px', float: 'left', textAlign: 'left'}}>
+    //         Option {proposal}
+    //       </div>
+    //       <div style={{width: '45px', float: 'left', textAlign: 'left', fontWeight: 600}}>
+    //         {parseInt(pct * 100)}%
+    //       </div>
+    //       <div style={{width: '267px', float: 'left'}}>
+    //         {/* TODO: - Align vertically */}
+    //         <div style={{marginTop: 5}}>
+    //           <ProgressBar percentage={pct * 100} />
+    //         </div>
+    //       </div>
+    //     </div>
+    //   )
+    // })
 
     // proposals3.map((proposal, i) => {
     //   let pct = proposal[1] / totalVotes
@@ -95,8 +174,3 @@ const Charts = ({proposals3}) => {
     //     </div>
     //   )
     // })
-
-  )
-}
-
-export default Charts
