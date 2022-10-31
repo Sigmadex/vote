@@ -4,6 +4,8 @@ import ConnectButton from '../ConnectButton'
 import CastVoteButton from '../CastVoteButton'
 import Modal from '../Modal'
 import Charts from '../Charts'
+import { parseName, parseBytes } from '../../utils';
+import { truncateAddress } from '../../utilities/formatting'
 
 const cardStyles = {
   width: '604px',
@@ -47,17 +49,18 @@ const disabledOptionButtonStyles = {
   color: '#B3BEC6'
 }
 
-function VoteCard({proposal, connectAccount, proposals3}) {
+function VoteCard({proposal, connectAccount, proposals3, voteProposal, testFunction}) {
   const walletAddress = useContext(AddressContext)
-  const [selectedOption, setOption] = useState(null)
+  const [selectedOption, setOption] = useState(undefined)
   const [hasVoted, displayPoll] = useState(false)
   // console.log(proposals3)
   const [proposals, setProposals] = useState([['X', ''], ['Y', ''], ['Z', '']])
 
   function castVote() {
-    if (selectedOption) {
-      console.log('casting vote for', selectedOption)
-      displayPoll(true)
+    if (selectedOption !== undefined) {
+      // console.log('casting vote for', selectedOption)
+      voteProposal(selectedOption)
+      // displayPoll(true)
     } else {
       alert('Please select an option')
     }
@@ -129,28 +132,31 @@ function VoteCard({proposal, connectAccount, proposals3}) {
                     key={i}
                     style={walletAddress ? optionButtonStyles : disabledOptionButtonStyles}
                     disabled={!walletAddress}
-                    onClick={() => setOption(proposal[0])}
+                    onClick={() => setOption(i)}
                   >
                     <span style={{fontWeight: '700', fontSize: '14px', display: 'block', marginTop: 8, marginBottom: -4}}>Option</span>
                     <span style={{fontWeight: '700', fontSize: '40px', display: 'block'}}>{proposal[0]}</span>
                   </button>
                 )} */}
-                {proposals3.map((proposal, i) =>
-                  <button
-                    // key={i}
-                    style={walletAddress ? optionButtonStyles : disabledOptionButtonStyles}
-                    disabled={!walletAddress}
-                    onClick={() => setOption(proposal[0])}
-                  >
-                    <span style={{fontWeight: '700', fontSize: '14px', display: 'block', marginTop: 8, marginBottom: -4}}>Option</span>
-                    <span style={{fontWeight: '700', fontSize: '40px', display: 'block'}}>{proposal[0]}</span>
-                  </button>
-                )}
+                {proposals3.map((proposal, index) => {
+                  const name = parseName(parseBytes(proposal.name))
+                  return (
+                    <button
+                      key={index}
+                      style={walletAddress ? optionButtonStyles : disabledOptionButtonStyles}
+                      disabled={!walletAddress}
+                      onClick={() => setOption(index)}
+                    >
+                      <span style={{fontWeight: '700', fontSize: '14px', display: 'block', marginTop: 8, marginBottom: -4}}>Option</span>
+                      <span style={{fontWeight: '700', fontSize: '40px', display: 'block'}}>{truncateAddress(name)}</span>
+                    </button>
+                  )
+                })}                  
               </div>
             </div>
             <div>
               {walletAddress
-                ? <CastVoteButton text={'Cast Vote'} castVote={castVote} />
+                ? <CastVoteButton castVote={castVote} />
                 : <ConnectButton connectAccount={connectAccount} />}
             </div>
             <Modal text={'This wallet does not hold a vote NFT.'} display={false} />

@@ -6,6 +6,8 @@ import Test from '../Test'
 import Proposal from '../Proposal'
 import Footer from '../Footer'
 import Dapp from '../Dapp'
+import CheckVoterAddress from '../CheckVoterAddress'
+import Check from '../Check'
 // import Vault from '../Vault'
 // import Ballot from '../Ballot'
 // import Charts from '../Charts'
@@ -73,6 +75,9 @@ const App = () => {
         <Route path='/test' element={<Test />} />
         <Route path='/proposal' element={<Proposal />} />
         <Route path='/dapp' element={<Dapp />} />
+
+        <Route path='/check' element={<Check />} />
+
         <Route path='*' element={<h1>404</h1>} />
       </Routes>
       <Footer />

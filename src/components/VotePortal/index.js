@@ -3,161 +3,68 @@ import VoteCard from '../VoteCard'
 import { ethers } from 'ethers'
 import { AddressContext } from '../../utilities/Auth'
 import abi from '../../artifacts/contracts/Keyboards.sol/Keyboards.json'
-
-const proposalABI = [
-  {
-      "inputs": [
-          {
-              "internalType": "address",
-              "name": "to",
-              "type": "address"
-          }
-      ],
-      "name": "delegate",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-  },
-  {
-      "inputs": [
-          {
-              "internalType": "address",
-              "name": "voter",
-              "type": "address"
-          }
-      ],
-      "name": "giveRightToVote",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-  },
-  {
-      "inputs": [],
-      "stateMutability": "nonpayable",
-      "type": "constructor"
-  },
-  {
-      "inputs": [
-          {
-              "internalType": "uint256",
-              "name": "proposal",
-              "type": "uint256"
-          }
-      ],
-      "name": "vote",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-  },
-  {
-      "inputs": [],
-      "name": "chairperson",
-      "outputs": [
-          {
-              "internalType": "address",
-              "name": "",
-              "type": "address"
-          }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-  },
-  {
-      "inputs": [
-          {
-              "internalType": "uint256",
-              "name": "",
-              "type": "uint256"
-          }
-      ],
-      "name": "proposals",
-      "outputs": [
-          {
-              "internalType": "string",
-              "name": "name",
-              "type": "string"
-          },
-          {
-              "internalType": "uint256",
-              "name": "voteCount",
-              "type": "uint256"
-          }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-  },
-  {
-      "inputs": [
-          {
-              "internalType": "address",
-              "name": "",
-              "type": "address"
-          }
-      ],
-      "name": "voters",
-      "outputs": [
-          {
-              "internalType": "uint256",
-              "name": "weight",
-              "type": "uint256"
-          },
-          {
-              "internalType": "bool",
-              "name": "voted",
-              "type": "bool"
-          },
-          {
-              "internalType": "address",
-              "name": "delegate",
-              "type": "address"
-          },
-          {
-              "internalType": "uint256",
-              "name": "vote",
-              "type": "uint256"
-          }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-  },
-  {
-      "inputs": [],
-      "name": "winnerName",
-      "outputs": [
-          {
-              "internalType": "string",
-              "name": "winnerName_",
-              "type": "string"
-          }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-  },
-  {
-      "inputs": [],
-      "name": "winningProposal",
-      "outputs": [
-          {
-              "internalType": "uint256",
-              "name": "winningProposal_",
-              "type": "uint256"
-          }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-  }
-]
+import TokenArtifact from '../../ABI/Ballot.json';
+import contractAddress from '../../ABI/contract-address.json';
 
 const VotePortal = ({connectAccount}) => {
   const [ethereum, setEthereum] = useState(undefined)
   const walletAddress = useContext(AddressContext)
-  // const contractAddress = process.env.REACT_APP_KEYBOARD_CONTRACT_ADDRESS
-  const contractAddress = "0x7aE2B1162444456894C3711bBECCEf207Facd790"
+  // const contractAddress = process.env.REACT_APP_KEYBOARD_CONTRACT_ADDRESS // deprecated
   const contractABI = abi.abi
   const [keyboards, setKeyboards] = useState([])
-  const [votes, setVotes] = useState([])
-  const [proposals, setProposals] = useState({})
-  let proposals2 = []
+  const [token, setToken] = useState();
+  const [proposals, setProposals] = useState([]);
+  const [chairperson, setChairperson] = useState('');
+
+  async function _initialize() {
+    await _intializeEthers();
+  }
+
+  const _intializeEthers = async () => {
+    // ethers connection for the smartcontract
+    const _provider = new ethers.providers.Web3Provider(window.ethereum);
+    const _token = new ethers.Contract(
+      contractAddress.Token,
+      TokenArtifact.abi,
+      _provider.getSigner(0)
+    );
+    // get the proposals
+    const newProposal = await _token.getAllProposals();
+    // get the chairman address
+    const newChairperson = await _token.chairperson();
+    // save the token data into a hook to reuse it along the app
+    setToken(_token);
+    setProposals(newProposal);
+    setChairperson(newChairperson);
+  };
+
+  // Connects to the smart contract token id (check /contracts/contract-address.json)
+  async function init() {
+    // const [selectedAddress] = await window.ethereum.enable(); // deprecated
+    // if (window.ethereum) {
+    //   try {
+        const selectedAddress = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        _initialize(selectedAddress);
+    //   } catch (error) {
+    //     if (error.code === 4001) {
+    //       // User rejected request
+    //     }
+    
+    //     setError(error);
+    //   }
+    // }
+  }
+
+  useEffect(() => {
+    // When the page loads it will initialize the init function
+    // that we need to connect the frontend with the smartcontract
+    init();
+  }, []);
+
+  const voteProposal = async (proposal) => {
+    // console.log('voting for', proposal)
+    await token.vote(proposal);
+  };
 
   const getConnectedAccount = async () => {
     if (window.ethereum) {
@@ -174,17 +81,17 @@ const VotePortal = ({connectAccount}) => {
     getConnectedAccount()
   }, [])
 
-  const getKeyboards = async () => {
-    if (ethereum && walletAddress) {
-      const provider = new ethers.providers.Web3Provider(ethereum);
-      const signer = provider.getSigner();
-      console.log(contractAddress)
-      const keyboardsContract = new ethers.Contract(contractAddress, contractABI, signer);
-      const keyboards = await keyboardsContract.getKeyboards();
-      console.log('Retrieved keyboards...', keyboards)
-      setKeyboards(keyboards)
-    }
-  }
+  // const getKeyboards = async () => {
+  //   if (ethereum && walletAddress) {
+  //     const provider = new ethers.providers.Web3Provider(ethereum);
+  //     const signer = provider.getSigner();
+  //     console.log(contractAddress)
+  //     const keyboardsContract = new ethers.Contract(contractAddress, contractABI, signer);
+  //     const keyboards = await keyboardsContract.getKeyboards();
+  //     console.log('Retrieved keyboards...', keyboards)
+  //     setKeyboards(keyboards)
+  //   }
+  // }
 
   // MARK: - Runs when walletAddress is set in AddressContext
   // useEffect(() => {
@@ -211,37 +118,26 @@ const VotePortal = ({connectAccount}) => {
     ]
   }
 
-  // const [proposals3, setProposals3] = useState([])
   let proposals3 = []
-
-  const getVotes = async () => {
-    if (walletAddress) {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const contract = new ethers.Contract(contractAddress, proposalABI, provider); // address for smart contract
-
-      const proposal0 = await contract.proposals(0)
-      proposals3.push([proposal0.name, parseInt(proposal0.voteCount._hex, 16)])
-      // setProposals3([...proposals3, [proposal0.name, parseInt(proposal0.voteCount._hex, 16)]])
-
-      const proposal1 = await contract.proposals(1)
-      proposals3.push([proposal1.name, parseInt(proposal1.voteCount._hex, 16)])
-      // setProposals3([...proposals3, [proposal1.name, parseInt(proposal1.voteCount._hex, 16)]])
-
-      const proposal2 = await contract.proposals(2)
-      proposals3.push([proposal2.name, parseInt(proposal2.voteCount._hex, 16)])
-      // setProposals3([...proposals3, [proposal2.name, parseInt(proposal2.voteCount._hex, 16)]])
-
-      // console.log(proposals3)
-    }
-  }
-
-  useEffect(() => {
-    getVotes()
-  }, [walletAddress])
 
   return (
     <div style={{paddingTop: '266px', paddingBottom: '266px'}}>
-      <VoteCard proposal={testProposal} connectAccount={connectAccount} proposals3={proposals3} />
+      <VoteCard proposal={testProposal} connectAccount={connectAccount} proposals3={proposals} voteProposal={voteProposal} />
+      {/* {proposals.map((proposal, index) => {
+          const name = parseName(parseBytes(proposal.name));
+          const voteCount = proposal.voteCount._hex;
+          return (
+            <div key={index} style={{ padding: '1rem 0' }}>
+              🗳 {name} - {Number(voteCount)}
+              <button
+                style={{ marginLeft: '2em' }}
+                onClick={() => voteProposal(index)}
+              >
+                Vote
+              </button>
+            </div>
+          );
+        })}       */}
     </div>
   );
 }
