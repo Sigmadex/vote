@@ -34,7 +34,8 @@ const Check = () => {
   };  
 
   async function init() {
-    const [selectedAddress] = await window.ethereum.enable();
+    // const [selectedAddress] = await window.ethereum.enable();
+    const selectedAddress = await window.ethereum.request({ method: 'eth_requestAccounts' });
     _initialize(selectedAddress);
   }
 

@@ -49,12 +49,12 @@ const disabledOptionButtonStyles = {
   color: '#B3BEC6'
 }
 
-function VoteCard({proposal, connectAccount, proposals3, voteProposal, voterStatus}) {
+function VoteCard({testProposal, connectAccount, proposals, voteProposal, voterStatus}) {
   const walletAddress = useContext(AddressContext)
   const [selectedOption, setOption] = useState(undefined)
   const [hasVoted, displayPoll] = useState(true)
-  // console.log(proposals3)
-  const [proposals, setProposals] = useState([['X', ''], ['Y', ''], ['Z', '']])
+  // console.log(proposals)
+  // const [proposals, setProposals] = useState([['X', ''], ['Y', ''], ['Z', '']])
 
   function castVote() {
     if (selectedOption !== undefined) {
@@ -65,8 +65,6 @@ function VoteCard({proposal, connectAccount, proposals3, voteProposal, voterStat
       alert('Please select an option')
     }
   }
-
-  console.log(voterStatus?.voted)
 
   return (
     <div style={{textAlign: 'center', fontSize: '14px'}}>
@@ -86,7 +84,7 @@ function VoteCard({proposal, connectAccount, proposals3, voteProposal, voterStat
             </div>
             <div style={{display: 'flex', justifyContent: 'center'}}>
               <div style={{width: 462}}>
-                <Charts proposals3={proposals3} />
+                <Charts proposals={proposals} />
               </div>
             </div>
           </div>
@@ -108,7 +106,7 @@ function VoteCard({proposal, connectAccount, proposals3, voteProposal, voterStat
                     Proposal ID:
                   </span>
                   <span style={{fontWeight: '700'}}>
-                    {proposal.id}
+                    {testProposal.id}
                   </span>
                 </div>
                 <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: 6}}>
@@ -116,7 +114,7 @@ function VoteCard({proposal, connectAccount, proposals3, voteProposal, voterStat
                     RE:
                   </span>
                   <span style={{fontWeight: '700'}}>
-                    {proposal.subject}
+                    {testProposal.subject}
                   </span>
                 </div>
                 <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: 3}}>
@@ -124,7 +122,7 @@ function VoteCard({proposal, connectAccount, proposals3, voteProposal, voterStat
                     Forum Link:
                   </span>
                   <span style={{fontWeight: '700'}}>
-                    <a style={{textDecoration: 'none', color: 'inherit'}} href={proposal.link}>View</a>
+                    <a style={{textDecoration: 'none', color: 'inherit'}} href={testProposal.link}>View</a>
                   </span>
                 </div>
               </div>
@@ -142,7 +140,7 @@ function VoteCard({proposal, connectAccount, proposals3, voteProposal, voterStat
                     <span style={{fontWeight: '700', fontSize: '40px', display: 'block'}}>{proposal[0]}</span>
                   </button>
                 )} */}
-                {proposals3.map((proposal, index) => {
+                {proposals.map((proposal, index) => {
                   const name = parseName(parseBytes(proposal.name))
                   return (
                     <button

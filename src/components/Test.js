@@ -1,73 +1,66 @@
-import { useState } from 'react'
+import { useState, useEffect, useContext } from 'react'
+import { AddressContext } from '../utilities/Auth'
+import { ethers } from 'ethers'
+import TokenArtifact from '../ABI/Ballot.json'
+import contractAddress from '../ABI/contract-address.json'
 
-let proposal = {
-  options: [
-    {
-      optionName: 'A',
-      optionDescription: ''
-    },
-    {
-      optionName: 'B',
-      optionDescription: ''
-    },
-    {
-      optionName: 'C',
-      optionDescription: ''
+const Test = () => {
+  const walletAddress = useContext(AddressContext) //
+  const [token, setToken] = useState() //
+  const [voterStatus, setVoterStatus] = useState() //
+
+  useEffect(() => { //
+    if (walletAddress) {
+      init()
     }
-  ]
-}
+  }, [walletAddress])
 
-const optionButtonStyles = {
-  fontFamily: 'Work Sans',
-  width: '142px',
-  height: '109px',
-  background: '#FFFFFF',
-  border: '1px solid #B3BEC6',
-  boxShadow: '0px 4px 20px rgba(166, 194, 215, 0.3)',
-  borderRadius: '20px',
-  cursor: 'pointer',
-  color: '#404C55'
-}
-
-const disabledOptionButtonStyles = {
-  fontFamily: 'Work Sans',
-  width: '142px',
-  height: '109px',
-  background: '#ECF2F5',
-  borderStyle: 'none',
-  boxShadow: '0px 4px 20px rgba(166, 194, 215, 0.3)',
-  borderRadius: '20px',
-  cursor: 'not-allowed',
-  color: '#B3BEC6'
-}
-
-function Test() {
-  let [selectedOption, setOption] = useState(null)
-  let options = ['A', 'B', 'C']
-
-  function castVote() {
-    if (selectedOption) {
-      console.log('casting vote for', selectedOption)
-    } else {
-      alert('Please select an option')
+  async function init() { //
+    if (window.ethereum) {
+      try {
+        _initialize()
+      } catch (error) {
+        if (error.code === 4001) {
+          // User rejected request
+        }    
+      }
     }
+  }
+  
+  async function _initialize() { //
+    await _intializeEthers()
+  }
+  
+  const _intializeEthers = async () => { //
+    const _provider = new ethers.providers.Web3Provider(window.ethereum)
+    const _token = new ethers.Contract(contractAddress.Token, TokenArtifact.abi, _provider.getSigner(0))
+    setToken(_token)
+  }      
+
+  useEffect(() => { // 
+    if (token) { // if (ethereum && token)
+      checkAddressVoter(walletAddress)
+    }
+  }, [token])
+
+  const checkAddressVoter = async (address) => { //
+		try {
+			const voterData = await token.voters(address)
+			setVoterStatus(voterData)
+		} catch (err) {
+			console.log(err)
+			setVoterStatus('An error has occured')
+		}    
   }
 
   return (
     <div>
-      <h1>Test</h1>
-      {options.map((option, i) =>
-        <button
-          key={i}
-          style={optionButtonStyles}
-          onClick={() => setOption(option)}
-        >
-          <div style={{fontWeight: '700', fontSize: '14px'}}>Option</div>
-          <div style={{fontWeight: '700', fontSize: '40px'}}>{option}</div>
-        </button>
-      )}
-      Selected option: {selectedOption}
-      <button onClick={() => castVote()}>Cast Vote</button>
+      <h3>Test</h3>
+      <h5>Current address: {walletAddress}</h5>
+      {/* {voterStatus && <h1>👍</h1>} */}
+      {voterStatus && voterStatus.voted
+        ? <h3>Already Voted, Show Results</h3>
+        : <h3>Not Voted, Select Proposal</h3>}
     </div>
   )
 }
