@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useContext } from 'react'
 import { AddressContext } from '../../utilities/Auth'
 import ConnectButton from '../ConnectButton'
 import CastVoteButton from '../CastVoteButton'
@@ -18,11 +18,12 @@ const cardStyles = {
 
 const pollStyles = {
   width: '604px',
-  height: '304px',
+  // height: '304px',
   backgroundColor: '#FFFFFF',
   boxShadow: '0px 4px 25px rgba(64, 76, 85, 0.15)',
   borderRadius: '20px',
-  color: '#404C55'
+  color: '#404C55',
+  paddingBottom: '38px'
 }
 
 const optionButtonStyles = {
@@ -52,15 +53,17 @@ const disabledOptionButtonStyles = {
 function VoteCard({testProposal, connectAccount, proposals, voteProposal, voterStatus}) {
   const walletAddress = useContext(AddressContext)
   const [selectedOption, setOption] = useState(undefined)
-  const [hasVoted, displayPoll] = useState(true)
-  // console.log(proposals)
-  // const [proposals, setProposals] = useState([['X', ''], ['Y', ''], ['Z', '']])
+  const [displayModal, toggleModal] = useState(false)
+  // const [proposals, setProposals] = useState([['X', ''], ['Y', ''], ['Z', '']]) // for testing styling
+
+  if (voterStatus) {
+    // console.log(Object.keys(voterStatus))
+    console.log(Number(voterStatus.weight._hex))
+  }
 
   function castVote() {
     if (selectedOption !== undefined) {
-      // console.log('casting vote for', selectedOption)
       voteProposal(selectedOption)
-      // displayPoll(true)
     } else {
       alert('Please select an option')
     }
@@ -68,6 +71,9 @@ function VoteCard({testProposal, connectAccount, proposals, voteProposal, voterS
 
   return (
     <div style={{textAlign: 'center', fontSize: '14px'}}>
+
+      <h3>This voter has weight of: {voterStatus ? Number(voterStatus.weight._hex) : '0'}</h3>
+
       <img
         // style={{width: '468px', height: '266px'}}
         alt='Pixel Guys'
@@ -161,7 +167,7 @@ function VoteCard({testProposal, connectAccount, proposals, voteProposal, voterS
                 ? <CastVoteButton castVote={castVote} />
                 : <ConnectButton connectAccount={connectAccount} />}
             </div>
-            <Modal text={'This wallet does not hold a vote NFT.'} display={false} />
+            <Modal text={'This wallet does not hold a vote NFT.'} display={displayModal} />
           </div>
         </div>}
     </div>
