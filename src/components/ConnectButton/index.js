@@ -31,7 +31,7 @@ const ConnectButton = ({connectAccount, navbar}) => {
 
   return (
     walletAddress
-      ? <span style={{color: '#ffffff'}}>{truncateAddress(walletAddress)}</span>
+      ? <span style={{color: navbar ? '#ffffff' : '#404C55'}}>{truncateAddress(walletAddress)}</span>
       : <button
           onClick={connectAccount}
           style={navbar ? navbarButtonStyles: buttonStyles}
