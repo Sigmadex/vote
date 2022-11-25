@@ -7,6 +7,7 @@ import Check from '../Check'
 
 import Test from '../Test'
 import Admin from '../Admin'
+import VotePortal2 from '../VotePortal2';
 
 import { Routes, Route } from 'react-router-dom'
 import { AddressContext } from '../../utilities/Auth'
@@ -65,6 +66,7 @@ const App = () => {
         
         <Route path='/test' element={<Test connectAccount={connectAccount} />} />
         <Route path='/admin' element={<Admin />} />
+        <Route path='/vote-card2' element={<VotePortal2 connectAccount={connectAccount} />} />
 
         <Route path='*' element={<h1>404</h1>} />
       </Routes>

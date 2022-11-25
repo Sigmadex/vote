@@ -1,16 +1,18 @@
 import { useState, useEffect, useContext } from 'react'
+import VoteCard2 from './VoteCard2'
 import { ethers } from 'ethers'
-import TokenArtifact from '../ABI/Ballot.json'
+import TokenArtifact from '../ABI/Ballot.json' // can we reference this from ABI folder? (e.g. import abi from '../../artifacts/contracts/Keyboards.sol/Keyboards.json')
 import contractAddress from '../ABI/contract-address.json'
 import { parseName, parseBytes } from '../utils'
 import { AddressContext } from '../utilities/Auth'
 import ConnectButton from './ConnectButton'
 
-const Test = ({connectAccount}) => {
-  const walletAddress = useContext(AddressContext)
+const VotePortal2 = ({connectAccount}) => {
+  let walletAddress = useContext(AddressContext)
   const [token, setToken] = useState()
   const [proposals, setProposals] = useState([])
   const [voterStatus, setVoterStatus] = useState()
+  // const [chairperson, setChairperson] = useState('')
 
   useEffect(() => {
     init()
@@ -68,33 +70,51 @@ const Test = ({connectAccount}) => {
     }
   }, [voterStatus])
 
+  const voteProposal = async (proposal) => {
+    // console.log('voting for', proposal)
+    await token.vote(proposal)
+  }    
+
+  let testProposal = {
+    id: 'SEP-002',
+    subject: 'Launch Strategy',
+    link: 'https://sigmadex.org/',
+    options: [
+      {
+        optionName: 'A',
+        optionDescription: ''
+      },
+      {
+        optionName: 'B',
+        optionDescription: ''
+      },
+      {
+        optionName: 'C',
+        optionDescription: ''
+      }
+    ]
+  }  
+
   return (
-    <div>
-      <h1>Test</h1>
-      <ul>
-        {walletAddress && voterStatus && Number(voterStatus.weight._hex) > 0
-          ? voterStatus.voted
-            ? <h1>Polls</h1>
-            : proposals.map((proposal, index) => {
-                const name = parseName(parseBytes(proposal.name))
-                return (
-                  <li key={index}>
-                    <button>{name}</button>
-                  </li>
-                )
-              })
-          : proposals.map((proposal, index) => {
-              const name = parseName(parseBytes(proposal.name))
-              return (
-                <li key={index}>
-                  <button disabled={true}>{name}</button>
-                </li>
-              )
-            })}
-      </ul>
-      <ConnectButton connectAccount={connectAccount} />
+    <div style={{paddingTop: '266px', paddingBottom: '266px'}}>
+      <h1>Vote Portal 2</h1>
+      {/* <VoteCard
+        testProposal={testProposal} 
+        connectAccount={connectAccount} 
+        proposals={proposals} 
+        voteProposal={voteProposal} 
+        voterStatus={voterStatus}
+      /> */}
+      <VoteCard2 
+        walletAddress={walletAddress}
+        testProposal={testProposal} 
+        connectAccount={connectAccount} 
+        proposals={proposals} 
+        voteProposal={voteProposal} 
+        voterStatus={voterStatus}
+      />
     </div>
   )
 }
 
-export default Test
+export default VotePortal2

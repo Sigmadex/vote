@@ -22,7 +22,7 @@ const Footer = () => {
       // class={'footer'}
       style={footerStyles}
     >
-      &copy; {currentYear()} Sigma Labs
+      &copy; {currentYear()}<a href='https://sigmadex.org/' style={{marginLeft: 5, color: '#404C55', textDecoration: 'none'}}>Sigma Labs</a>
       {/* {userAddress()} */}
       {/* <img alt='block' src='/images/block.svg' /> */}
     </div>

@@ -20,10 +20,10 @@ const Check = () => {
   };
 
   async function _initialize() {
-    await _intializeEthers();
+    await _initializeEthers();
   }
 
-  const _intializeEthers = async () => {
+  const _initializeEthers = async () => {
     const _provider = new ethers.providers.Web3Provider(window.ethereum);
     const _token = new ethers.Contract(
       contractAddress.Token,
