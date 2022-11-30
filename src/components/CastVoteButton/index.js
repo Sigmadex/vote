@@ -15,7 +15,6 @@ const buttonStyles = {
   // padding: '0px'
 }
 
-// MARK: - This button is for the VoteCard component
 const CastVoteButton = ({castVote}) => {
   return (
     <button

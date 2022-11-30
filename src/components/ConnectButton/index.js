@@ -31,7 +31,14 @@ const ConnectButton = ({connectAccount, navbar}) => {
 
   return (
     walletAddress
-      ? <span style={{color: navbar ? '#ffffff' : '#404C55'}}>{truncateAddress(walletAddress)}</span>
+      ? navbar
+        ? <span style={{color: '#ffffff'}}>{truncateAddress(walletAddress)}</span>
+        : <button
+            style={{...buttonStyles, cursor: 'not-allowed'}}
+            disabled={true}
+          >
+            Connect Wallet
+          </button>
       : <button
           onClick={connectAccount}
           style={navbar ? navbarButtonStyles: buttonStyles}

@@ -1,5 +1,5 @@
 /*
-  MARK: - All data formatting methods go here
+  All data formatting methods go here
 */
 import { ethers } from 'ethers'
 

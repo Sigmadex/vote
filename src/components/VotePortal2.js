@@ -97,7 +97,6 @@ const VotePortal2 = ({connectAccount}) => {
 
   return (
     <div style={{paddingTop: '266px', paddingBottom: '266px'}}>
-      <h1>Vote Portal 2</h1>
       {/* <VoteCard
         testProposal={testProposal} 
         connectAccount={connectAccount} 
