@@ -9,10 +9,14 @@ const VotePortal = ({connectAccount}) => {
   let walletAddress = useContext(AddressContext)
   const [token, setToken] = useState()
   const [proposals, setProposals] = useState([])
-  // const [chairperson, setChairperson] = useState('')
   const [voterStatus, setVoterStatus] = useState()
+  // const [chairperson, setChairperson] = useState('')
 
-  async function init() {
+  useEffect(() => {
+    init()
+  }, [])
+
+  async function init() { 
     if (window.ethereum) {
       try {
         _initialize()
@@ -24,57 +28,50 @@ const VotePortal = ({connectAccount}) => {
     }
   }
 
-  async function _initialize() { // MARK: - redundant?
-    await _intializeEthers()
+  async function _initialize() { 
+    await _initializeEthers()
   }
 
-  const _intializeEthers = async () => {
-    // ethers connection for the smartcontract
+  const _initializeEthers = async () => { 
     const _provider = new ethers.providers.Web3Provider(window.ethereum)
-    const _token = new ethers.Contract(
-      contractAddress.Token,
-      TokenArtifact.abi,
-      _provider.getSigner(0)
-    )
-    // get the proposals
+    const _token = new ethers.Contract(contractAddress.Token, TokenArtifact.abi, _provider.getSigner(0))
     const newProposal = await _token.getAllProposals()
-    // get the chairman address
-    // const newChairperson = await _token.chairperson()
-    // save the token data into a hook to reuse it along the app
     setToken(_token)
     setProposals(newProposal)
-    // setChairperson(newChairperson)
+  }
+
+  // useEffect(() => {
+  // }, [token])
+
+  useEffect(() => {
+    if (walletAddress) {
+      checkAddressVoter(walletAddress)
+    }
+  }, [walletAddress])
+
+  const checkAddressVoter = async (address) => {
+    try {
+      const voterStatus = await token.voters(address)
+      setVoterStatus(voterStatus)
+    } catch (err) {
+      console.log(err)
+      // setVoterStatus('An error has occured')
+    }
   }
 
   useEffect(() => {
-    // When the page loads it will initialize the init function
-    // that we need to connect the frontend with the smartcontract
-    if (walletAddress) {
-      init()
+    if (voterStatus) {
+      let hasVoted = voterStatus.voted ? 'true' : 'false'
+      let voterWeight = Number(voterStatus.weight._hex)
+      console.log('has voted?', hasVoted)
+      console.log('voter weight', voterWeight)
     }
-  }, [walletAddress])  
+  }, [voterStatus])
 
   const voteProposal = async (proposal) => {
     // console.log('voting for', proposal)
     await token.vote(proposal)
-  }
-
-  const checkAddressVoter = async (address) => {
-		try {
-			const voterData = await token.voters(address)
-			setVoterStatus(voterData)
-		} catch (err) {
-			console.log(err)
-			setVoterStatus('An error has occured')
-		}    
-  }
-
-  /* automatically triggers when token is defined */
-  useEffect(() => {
-    if (token) { // if (ethereum && token)
-      checkAddressVoter(walletAddress)
-    }
-  }, [token])
+  }    
 
   let testProposal = {
     id: 'SEP-002',
@@ -94,11 +91,12 @@ const VotePortal = ({connectAccount}) => {
         optionDescription: ''
       }
     ]
-  }
+  }  
 
   return (
     <div style={{paddingTop: '266px', paddingBottom: '266px'}}>
       <VoteCard 
+        walletAddress={walletAddress}
         testProposal={testProposal} 
         connectAccount={connectAccount} 
         proposals={proposals} 

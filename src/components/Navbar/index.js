@@ -1,5 +1,4 @@
 import ConnectButton from '../ConnectButton'
-import { AddressContext } from '../../utilities/Auth'
 import { Link } from 'react-router-dom'
 
 const Logo = () => {
@@ -25,7 +24,6 @@ const navbarStyles = {
   top: '0px',
   left: '0px',
   right: '0px',
-  display: 'flex',
   justifyContent: 'space-between'
 }
 
