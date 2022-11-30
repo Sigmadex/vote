@@ -3,7 +3,6 @@ import './App.css';
 import Navbar from '../Navbar'
 import VotePortal from '../VotePortal'
 import Footer from '../Footer'
-import Check from '../Check'
 import Test from '../Test'
 import Admin from '../Admin'
 import { Routes, Route } from 'react-router-dom'
@@ -58,7 +57,6 @@ const App = () => {
       <Navbar connectAccount={connectAccount} />
       <Routes>
         <Route index element={<VotePortal connectAccount={connectAccount} />} />
-        <Route path='/check' element={<Check />} />
         <Route path='/test' element={<Test connectAccount={connectAccount} />} />
         <Route path='/admin' element={<Admin />} />
         <Route path='*' element={<h1>404</h1>} />
