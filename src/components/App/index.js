@@ -53,7 +53,8 @@ const App = () => {
   // }, [ethereum])
 
   return (
-    <AddressContext.Provider value={walletAddress}>
+    // can also set window.ethereum to context (although walletAddress implies window.ethereum)
+    <AddressContext.Provider value={walletAddress}> 
       <Navbar connectAccount={connectAccount} />
       <Routes>
         <Route index element={<VotePortal connectAccount={connectAccount} />} />

@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react'
 import { ethers } from 'ethers'
 import TokenArtifact from '../ABI/Ballot.json'
 import contractAddress from '../ABI/contract-address.json'
-import { parseName, parseBytes } from '../utils'
+import { parseName, parseBytes } from '../utilities/formatting'
 import { AddressContext } from '../utilities/Auth'
 import ConnectButton from './ConnectButton'
 

@@ -3,7 +3,7 @@ import ConnectButton from '../ConnectButton'
 import CastVoteButton from '../CastVoteButton'
 import Modal from '../Modal'
 import Charts from '../Charts'
-import { parseName, parseBytes } from '../../utils';
+import { parseName, parseBytes } from '../../utilities/formatting';
 import { truncateAddress } from '../../utilities/formatting'
 
 const cardStyles = {

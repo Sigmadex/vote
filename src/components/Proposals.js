@@ -1,4 +1,4 @@
-import { parseName, parseBytes } from '../utils';
+import { parseName, parseBytes } from '../utilities/formatting';
 
 const Proposals = ({ proposals, voteProposal }) => {
 	return (

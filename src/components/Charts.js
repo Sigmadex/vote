@@ -1,4 +1,4 @@
-import { parseName, parseBytes } from '../utils';
+import { parseName, parseBytes } from '../utilities/formatting';
 
 var styles = {
   progressBar: {
