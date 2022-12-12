@@ -82,7 +82,7 @@ const ProposalDetails = ({testProposal}) => {
   )
 }
 
-const ProposalOptions = ({proposals, walletAddress, allowedToVote, setOption}) => {
+const ProposalOptions = ({proposals, allowedToVote, setOption}) => {
   return (
     <div style={{display: 'flex', justifyContent: 'center'}}>
       <div style={{width: 499, display: 'flex', justifyContent: 'space-between', marginBottom: 34}}>
@@ -151,7 +151,7 @@ const VoteCard = ({walletAddress, testProposal, connectAccount, proposals, voteP
                   Select one of the three options below and submit your vote.
                 </div>
                 <ProposalDetails testProposal={testProposal} />
-                <ProposalOptions walletAddress={walletAddress} proposals={proposals} allowedToVote={true} setOption={setOption} />
+                <ProposalOptions proposals={proposals} allowedToVote={true} setOption={setOption} />
                 <CastVoteButton castVote={castVote} />
               </div>)
           : (<div>
@@ -159,7 +159,7 @@ const VoteCard = ({walletAddress, testProposal, connectAccount, proposals, voteP
                 Connect your wallet to see if you qualify for voting.
               </div>
               <ProposalDetails testProposal={testProposal} />
-              <ProposalOptions walletAddress={walletAddress} proposals={proposals} allowedToVote={false} setOption={setOption} />
+              <ProposalOptions proposals={proposals} allowedToVote={false} setOption={setOption} />
               <ConnectButton connectAccount={connectAccount} />
             </div>)}
         <Modal displayModal={displayModal} toggleModal={toggleModal} />

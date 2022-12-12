@@ -71,6 +71,7 @@ const VotePortal = ({connectAccount}) => {
   const voteProposal = async (proposal) => {
     // console.log('voting for', proposal)
     await token.vote(proposal)
+    // reload proposals here by checking voterStatus after vote
   }    
 
   let testProposal = {

@@ -1,13 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { ethers } from 'ethers';
 import CheckVoterAddress from './CheckVoterAddress';
 // import Proposals from './Proposals';
 import AddVoter from './AddVoter';
 import TokenArtifact from '../ABI/Ballot.json';
 import contractAddress from '../ABI/contract-address.json';
+import { AddressContext } from '../utilities/Auth';
+
+// TODO: - Need an HOC to kick out everyone but chairperson
 
 const Admin = () => {
-  // TODO: - use AddressContext here
+	const walletAddress = useContext(AddressContext)
 	const [token, setToken] = useState();
 	const [newVoter, setNewVoter] = useState('');
 	const [newVoterStatus, setNewVoterStatus] = useState('');
@@ -15,6 +18,7 @@ const Admin = () => {
 	const [voterAddressToCheck, setVoterAddressToCheck] = useState('');
 	// const [proposals, setProposals] = useState([]);
 	const [chairperson, setChairperson] = useState('');
+	// const [addr, setAddr] = useState('')
 
 	// **************** Ethers Connection for the SmartContract ****************
 
@@ -77,6 +81,13 @@ const Admin = () => {
 
 	// It gives the right to vote to a new address
 	const addNewVoter = async () => {
+		// console.log([chairperson, addr])
+		// if (chairperson !== '' && addr !== '') {
+		// 	console.log(chairperson.toLowerCase() === addr.toLowerCase())
+		// }
+		// if (chairperson && walletAddress) {
+		// 	console.log([chairperson, walletAddress])
+		// }
 		try {
 			await token.giveRightToVote(newVoter);
 			setNewVoterStatus('Success');
@@ -94,6 +105,7 @@ const Admin = () => {
 			</div>
       {/* <Proposals proposals={proposals} voteProposal={voteProposal} /> */}
 			<AddVoter
+				chairperson={chairperson}
 				addNewVoter={addNewVoter}
 				setNewVoter={setNewVoter}
 				newVoter={newVoter}
