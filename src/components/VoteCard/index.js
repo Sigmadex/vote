@@ -4,7 +4,6 @@ import CastVoteButton from '../CastVoteButton'
 import Modal from '../Modal'
 import Charts from '../Charts'
 import { parseName, parseBytes } from '../../utilities/formatting';
-import { truncateAddress } from '../../utilities/formatting'
 
 const cardStyles = {
   width: '604px',
@@ -27,7 +26,8 @@ const pollStyles = {
 
 const optionButtonStyles = {
   fontFamily: 'Work Sans',
-  width: '142px',
+  // width: '142px',
+  width: '100px',  
   height: '109px',
   background: '#FFFFFF',
   border: '1px solid #B3BEC6',
@@ -39,7 +39,8 @@ const optionButtonStyles = {
 
 const disabledOptionButtonStyles = {
   fontFamily: 'Work Sans',
-  width: '142px',
+  // width: '142px',
+  width: '100px',  
   height: '109px',
   background: '#ECF2F5',
   borderStyle: 'none',
@@ -82,6 +83,17 @@ const ProposalDetails = ({testProposal}) => {
   )
 }
 
+const setOptionsWidth = (numberOfProposals) => {
+  switch (numberOfProposals) {
+    case 4: 
+      return 120
+    case 5:
+      return 100
+    default: 
+      return 142
+  }
+}
+
 const ProposalOptions = ({proposals, allowedToVote, setOption}) => {
   return (
     <div style={{display: 'flex', justifyContent: 'center'}}>
@@ -91,12 +103,16 @@ const ProposalOptions = ({proposals, allowedToVote, setOption}) => {
           return (
             <button
               key={index}
-              style={allowedToVote ? optionButtonStyles : disabledOptionButtonStyles}
+              style={
+                allowedToVote 
+                ? {...optionButtonStyles, width: setOptionsWidth(proposals.length)} 
+                : {...disabledOptionButtonStyles, width: setOptionsWidth(proposals.length)}
+              }
               onClick={() => allowedToVote ? setOption(index) : undefined}
               disabled={allowedToVote ? false : true}
             >
               <span style={{fontWeight: '700', fontSize: '14px', display: 'block', marginTop: 8, marginBottom: -4}}>Option</span>
-              <span style={{fontWeight: '700', fontSize: '40px', display: 'block'}}>{truncateAddress(name)}</span>
+              <span style={{fontWeight: '700', fontSize: '40px', display: 'block'}}>{name.substring(0, 3) + '...'}</span>
             </button>
           )
         })}                  
